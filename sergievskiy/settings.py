@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_ckeditor_5',
+    # 'django_ckeditor_5',
     'crispy_forms',
     'crispy_bootstrap5',
     'gallery',
@@ -93,9 +93,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATIC_ROOT = BASE_DIR.joinpath('staticfiles')
+STATIC_ROOT = ''
 
-STATICFILES_DIRS = (STATIC_URL,)
+STATICFILES_DIRS = ('static',)
 
 MEDIA_URL = 'media/'
 

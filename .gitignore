@@ -545,3 +545,4 @@ pyrightconfig.json
 
 # Backup files
 *.bak
+static/admin
