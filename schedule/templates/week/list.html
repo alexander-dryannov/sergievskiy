@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="accordion" id="accordionExample">
+        {% for item in data %}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne"
+                            aria-expanded="true" aria-controls="collapseOne">
+                        {{ item.week.name }}
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                     data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Дата</th>
+                                <th scope="col">Кому служба</th>
+                                <th scope="col">Время</th>
+                                <th scope="col">Тип службы</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for schedule in item.schedule %}
+                                <tr>
+                                    <td>{{ schedule.event.date }}</td>
+                                    <td>{{ schedule.to_whom|linebreaks }}</td>
+                                    <td>{{ schedule.event.time }}</td>
+                                    <td>
+                                        {% for ts in schedule.type_service.all %}
+                                            {{ ts.name }}
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

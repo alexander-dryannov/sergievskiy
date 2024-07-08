@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "assets/js/PhotoSwipe-5.4.2/dist/photoswipe.css" %}">
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          referrerpolicy="no-referrer" rel="stylesheet"/>
+    {% block css %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <title>Gallery</title>
+</head>
+
+<body>
+<div class="wrapper">
+    <header class="header">
+        <div class="header-top d-flex justify-content-around">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="tel:+7(495)642-63-09">
+                        <i class="fa-solid fa-phone"></i>
+                        +7(495)642-63-09
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="tel:+7(926)598-87-64">
+                        <i class="fa-solid fa-phone"></i>
+                        +7(926)598-87-64
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="mailto:anton3082@mail.ru">
+                        <i class="fa-solid fa-envelope"></i>
+                        anton3082@mail.ru
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav align-items-center">
+                {% if request.user.is_authenticated %}
+                  <li>
+                    <span>{{ request.user.first_name }} {{ request.user.last_name | slice:":1" }}.</span>
+                  </li>
+                {% endif %}
+                <li class="nav-item">
+                    {% if request.user.is_staff %}
+                        <a class="nav-link" href="#">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        </a>
+                    {% else %}
+                        <a class="nav-link" href="#">
+                            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        </a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+        <h1 class="header-title text-center my-5">Храм Сергия Радонежского в Балашихе</h1>
+        <div class="header-middle">
+            {% include 'includes/navbar.html' %}
+        </div>
+    </header><!--header-->
+    <main class="main">
+        <div class="container py-5">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main><!--main-->
+    <footer class="footer mt-4">
+        <ul class="nav py-3">
+            <li class="nav-item mx-auto">
+                Храм Святого Преподобного Сергия Радонежского. Балашихинская и Орехово-Зуевская епархия. Балашихинское
+                благочиние Русской Православной церкви.
+            </li>
+        </ul>
+    </footer><!--footer-->
+</div>
+<script crossorigin="anonymous" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'assets/js/masonry-4.2.2/dist/masonry.pkgd.min.js' %}"></script>
+{% block scripts %}{% endblock %}
+<script type="module" src="{% static 'assets/js/init.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if request.user.is_staff %}
+        <div class="row">
+            <div class="col-12 mx-auto mb-5 text-center">
+                <span class="text-muted mr-3">ADMIN:</span>
+                <a href="{% url 'gallery:album_create' %}" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Добавить альбом">
+                    <i class="fa-solid fa-plus"></i>
+                </a>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="grid mx-auto" data-masonry='{ "itemSelector": ".grid-item", "isFitWidth": true }'>
+            {% for album in albums %}
+                <a href="{{ album.get_absolute_url }}" class="card bg-dark text-white card-margin grid-item">
+                    <img src="{{ album.cover.url }}" style="width: 250px;" alt="{{ album.title }}">
+                        <div class="card-img-overlay overlay d-flex flex-column justify-content-center">
+                            <h5 class="card-title text-center">{{ album.title }}</h5>
+                            <p class="card-text text-white text-center"><small>{{ album.updated_at }}</small></p>
+                        </div>
+                    </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

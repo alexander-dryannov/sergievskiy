@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-1">
+            <a href="{% url 'gallery:album_list' %}" class="btn btn-secondary" data-bs-toggle="tooltip"
+               data-bs-placement="top"
+               data-bs-title="Вернуться к альбомам">
+                <i class="fa-solid fa-arrow-rotate-left"></i>
+            </a>
+        </div>
+        <div class="col-3">
+            <h2 class="text-center">{{ album.title }}</h2>
+        </div>
+    </div>
+    {% if request.user.is_staff %}
+        <div class="row">
+            <div class="col-12 mx-auto mt-5 text-center">
+                <span class="text-muted mr-3">ADMIN:</span>
+                <a href="{{ album.get_deletion_to_cart_url }}" class="btn btn-warning" data-bs-toggle="tooltip"
+                   data-bs-placement="top" data-bs-title="Удалить в корзину">
+                    <i class="fa-solid fa-trash"></i>
+                </a>
+
+                <a href="{{ album.get_deletion_url }}" class="btn btn-danger" data-bs-toggle="tooltip"
+                   data-bs-placement="top" data-bs-title="Удалить окончательно">
+                    <i class="fa-solid fa-minus"></i>
+                </a>
+                <a href="{{ album.get_update_url }}" class="btn btn-info" data-bs-toggle="tooltip"
+                   data-bs-placement="top" data-bs-title="Редактировать">
+                    <i class="fa-solid fa-pen"></i>
+                </a>
+                <a href="{% url 'gallery:content_create' album.id %}" class="btn btn-primary" data-bs-toggle="tooltip"
+                   data-bs-placement="top" data-bs-title="Добавить изображения">
+                    <i class="fa-solid fa-plus"></i>
+                </a>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row">
+        {% if not videos and not images %}
+            <p class="text-center mt-5">Контента еще нет :)</p>
+        {% else %}
+            {% if videos %}
+                <div class="col-sm-12 col-md-9 mt-5 d-flex justify-content-center">
+            {% else %}
+                <div class="col-sm-12 col-md-12 mt-5 d-flex justify-content-center">
+            {% endif %}
+        <div class="grid gallery--responsive-images"
+             data-masonry='{ "itemSelector": ".grid-item", "isFitWidth": true }'>
+            <div class="pswp-gallery pswp-gallery--single-column" id="gallery--getting-started">
+                {% for image in images %}
+                    <a href="{{ image.file.url }}" data-image-slug="{{ image.slug }}"
+                       data-pswp-width="{{ image.file.width }}"
+                       data-pswp-height="{{ image.file.height }}" target="_blank">
+                        <img class="grid-item image" src="{{ image.file.url }}" alt=""/>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+            {% if videos %}
+                {% if images %}
+                    <div class="col-sm-12 col-md-3 mt-5">
+                {% else %}
+                    <div class="col-sm-12 col-md-12 mt-5">
+                {% endif %}
+            {% for video in videos %}
+                <video controls width="250" class="video d-flex mx-auto" id="video">
+                    <source src="{{ video.file.url }}"/>
+                    <div class="controls">
+                        <button class="video-detail"><i class="fa-solid fa-circle-info"></i></button>
+                    </div>
+                </video>
+            {% endfor %}
+            </div>
+            {% endif %}
+        {% endif %}
+        </div>
+{% endblock %}
