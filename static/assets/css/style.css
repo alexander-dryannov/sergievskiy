@@ -11,11 +11,6 @@ html, body {
   height: 100%;
 }
 
-p, a {
-  color: #303952;
-  font-family: "Blagoves";
-}
-
 .nav-item .nav-link {
   color: #303952;
 }
