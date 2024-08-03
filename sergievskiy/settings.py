@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
+from split_settings.tools import include
 
 
 load_dotenv()
@@ -12,7 +13,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = os.environ.get('DEBUG', False) == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -21,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'minio_storage',
     # 'django_ckeditor_5',
     'crispy_forms',
     'crispy_bootstrap5',
@@ -91,21 +93,31 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC = os.environ.get('STATIC', False) == 'True'
 
-STATIC_ROOT = ''
+MEDIA = os.environ.get('MEDIA', False) == 'True'
 
-STATICFILES_DIRS = ('static',)
+MINIO = os.environ.get('MINIO', False) == 'True'
 
-MEDIA_URL = 'media/'
+if not STATIC:
+    STATIC_URL = 'static/'
+    STATIC_ROOT = ''
+    STATICFILES_DIRS = ('static',)
 
-MEDIA_ROOT = 'media'
+if not MEDIA:
+    MEDIA_URL = 'media/'
+    MEDIA_ROOT = 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+if MINIO:
+    include(
+        'minio_storage.py',
+    )
 
 # CKEDITOR_5_CONFIGS = {
 #     'default': {
