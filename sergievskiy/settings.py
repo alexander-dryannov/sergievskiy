@@ -99,10 +99,12 @@ MEDIA = os.environ.get('MEDIA', False) == 'True'
 
 MINIO = os.environ.get('MINIO', False) == 'True'
 
+STATIC_URL = 'static/'
+
 if not STATIC:
-    STATIC_URL = 'static/'
     STATIC_ROOT = ''
-    STATICFILES_DIRS = ('static',)
+
+STATICFILES_DIRS = ('static',)
 
 if not MEDIA:
     MEDIA_URL = 'media/'

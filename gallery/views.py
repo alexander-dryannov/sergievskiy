@@ -109,6 +109,9 @@ class AlbumDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('album_list')
     raise_exception = True
 
+    def post(self, request, *args, **kwargs):
+        contents = models.AlbumContent.objects.filter()
+
 
 def album_delete_to_cart(request, *args, **kwargs):
     album = models.Album.objects.filter(pk=kwargs['pk'])
