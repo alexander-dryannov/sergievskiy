@@ -1,4 +1,4 @@
-name: Telegram Bot Notification Issue Opened
+name: Telegram Bot Notification Issue Closed
 
 on:
   issues:
