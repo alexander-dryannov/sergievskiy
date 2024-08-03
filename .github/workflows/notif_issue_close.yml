@@ -1,8 +1,8 @@
-name: Telegram Bot Notification
+name: Telegram Bot Notification Issue Opened
 
 on:
   issues:
-    types: [opened]
+    types: [closed]
 
 jobs:
   send-notification:
@@ -13,5 +13,5 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          message: 'New issue opened: ${{ github.event.issue.html_url }}'
+          message: 'Issue closed: ${{ github.event.issue.html_url }}'
 
