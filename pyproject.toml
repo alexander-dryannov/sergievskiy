@@ -1,0 +1,17 @@
+[tool.isort]
+profile = 'black'
+src_paths = ['gallery', 'schedule', 'multimedia', 'snippets']
+lines_after_imports = 2
+multi_line_output = 3
+indent = 4
+color_output = true
+
+[tool.black]
+line-length = 99
+skip-string-normalization = true
+target-version = ['py312']
+
+[tool.bandit]
+exclude_dirs = ['venv']
+tests = []
+skips = []

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-1">
+      <a href="{% url 'mmedia:list' %}" class="btn btn-secondary" data-bs-toggle="tooltip"
+         data-bs-placement="top"
+         data-bs-title="Вернуться к альбомам">
+        <i class="fa-solid fa-arrow-rotate-left"></i>
+      </a>
+    </div>
+    <div class="col-3">
+      <h2 class="text-center">{{ multimedia.title }}</h2>
+    </div>
+  </div>
+  {% if request.user.is_staff %}
+    <div class="row">
+      <div class="col-12 mx-auto mt-5 text-center">
+        <span class="text-muted mr-3">ADMIN:</span>
+
+        <a href="{{ url.get_deletion_url }}" class="btn btn-danger" data-bs-toggle="tooltip"
+           data-bs-placement="top" data-bs-title="Удалить">
+          <i class="fa-solid fa-minus"></i>
+        </a>
+        <a href="{{ url.get_update_url }}" class="btn btn-info" data-bs-toggle="tooltip"
+           data-bs-placement="top" data-bs-title="Редактировать">
+          <i class="fa-solid fa-pen"></i>
+        </a>
+        <a href="{% url 'mmedia:create' %}" class="btn btn-primary" data-bs-toggle="tooltip"
+           data-bs-placement="top" data-bs-title="Добавить новую ссылку">
+          <i class="fa-solid fa-plus"></i>
+        </a>
+      </div>
+    </div>
+  {% endif %}
+  <div class="row mt-5">
+    <div class="col">
+      <iframe class="d-flex mx-auto" width="560" height="315" src="{{ multimedia.url }}" title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+    </div>
+  </div>
+{% endblock %}

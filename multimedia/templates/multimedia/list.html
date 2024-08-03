@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% if request.user.is_staff %}
+    <div class="row">
+      <div class="col-12 mx-auto mb-5 text-center">
+        <span class="text-muted mr-3">ADMIN:</span>
+        <a href="{% url 'mmedia:create' %}" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+           data-bs-title="Добавить альбом">
+          <i class="fa-solid fa-plus"></i>
+        </a>
+      </div>
+    </div>
+  {% endif %}
+  <div class="row">
+    {% for url in urls %}
+      <div class="col-5">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">{{ url.title }}</div>
+            <a href="{{ url.get_absolute_url }}" class="btn btn-primary">Смотреть</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

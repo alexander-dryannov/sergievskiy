@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Изображение | Правка
+{% endblock %}
+
+{% block content %}
+    {{ request.resolver_match.kwargs }}
+    <div class="row">
+        <h2 class="text-center mb-5">Редактирование изображения</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <a href="{% url 'gallery:album_detail' request.resolver_match.kwargs.album__pk %}" class="btn btn-secondary">Отмена</a>
+            <button type="submit" class="btn btn-success">Сохранить</button>
+        </form>
+    </div>
+
+{% endblock %}
