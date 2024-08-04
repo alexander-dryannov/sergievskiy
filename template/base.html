@@ -12,7 +12,7 @@
           referrerpolicy="no-referrer" rel="stylesheet"/>
     {% block css %}{% endblock %}
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
-    <title>Gallery</title>
+    <title>{% block title %}{% endblock %}</title>
 </head>
 
 <body>
