@@ -9,7 +9,7 @@
                 {% csrf_token %}
                 {{ form.media }}
                 {{ form|crispy }}
-                <a href="{% url 'gallery:album_detail' request.resolver_match.kwargs.album__pk %}" class="btn btn-secondary">Отмена</a>
+                <a href="{% url 'gallery:album_detail' request.resolver_match.kwargs.album_pk %}" class="btn btn-secondary">Отмена</a>
                 <button type="submit" class="btn btn-primary">Сохранить</button>
             </form>
         </div>

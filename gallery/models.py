@@ -64,6 +64,7 @@ class AlbumContent(smodels.FileModel):
         return reverse(
             'gallery:content_detail',
             args=[
+                self.album_id,
                 self.slug,
             ],
         )

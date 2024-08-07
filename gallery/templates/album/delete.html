@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Галерея | Удаление альбома
+{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-12 col-lg-8">
+            <div class="card text-center border-0">
+                <div class="card-body">
+                    <p class="card-text">Вы действительно хотите удалить альбом <b>{{ album.title}}</b>?</p>
+                    <form class="post_create" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <a href="{% url 'gallery:album_list' %}" class="btn btn-secondary">Отмена</a>
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
