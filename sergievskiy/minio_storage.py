@@ -1,6 +1,7 @@
 import os
 
 from dotenv import load_dotenv
+from minio import Minio
 
 load_dotenv()
 
@@ -26,3 +27,10 @@ MINIO_STORAGE_ACCESS_KEY = os.getenv('MINIO_STORAGE_ACCESS_KEY')
 MINIO_STORAGE_SECRET_KEY = os.getenv('MINIO_STORAGE_SECRET_KEY')
 MINIO_STORAGE_USE_HTTPS = os.environ.get('MINIO_STORAGE_USE_HTTPS', False) == 'True'
 MINIO_STORAGE_ENDPOINT = os.getenv('MINIO_STORAGE_ENDPOINT')
+
+MINIO_CLIENT = Minio(
+    MINIO_STORAGE_ENDPOINT,
+    MINIO_STORAGE_ACCESS_KEY,
+    MINIO_STORAGE_SECRET_KEY,
+    secure=True if MINIO_STORAGE_USE_HTTPS else False,
+)

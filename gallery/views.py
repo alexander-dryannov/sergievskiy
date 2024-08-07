@@ -1,12 +1,17 @@
 import os
 import uuid
 
+from django.contrib.auth.decorators import permission_required
+from minio import Minio
+
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, FormView, ListView, UpdateView
 
+from snippets.minio.delete import delete_object
 from . import choices, models
 from .forms import AlbumContentForm, AlbumForm
 
@@ -79,6 +84,9 @@ class AlbumDetailView(DetailView):
     model = models.Album
     template_name = 'album/detail.html'
 
+    def get_queryset(self):
+        return self.model.objects.filter(is_visible=True, is_deleted=False)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['images'] = models.AlbumContent.objects.filter(
@@ -106,28 +114,20 @@ class AlbumUpdateView(LoginRequiredMixin, UpdateView):
 class AlbumDeleteView(LoginRequiredMixin, DeleteView):
     model = models.Album
     template_name = 'album/delete.html'
-    success_url = reverse_lazy('album_list')
+    success_url = reverse_lazy('gallery:album_list')
     raise_exception = True
 
     def post(self, request, *args, **kwargs):
-        contents = models.AlbumContent.objects.filter()
+        object = self.get_object()
+        contents = models.AlbumContent.objects.filter(album_id=object.id)
+        minio_delete_objects = [content.file.name for content in contents]
 
+        if contents:
+            delete_object(minio_delete_objects)
+            contents.delete()
 
-def album_delete_to_cart(request, *args, **kwargs):
-    album = models.Album.objects.filter(pk=kwargs['pk'])
-    album_content = models.AlbumContent.objects.filter(album=album.first())
-    with transaction.atomic():
-        album_content.update(is_deleted=True, is_visible=False)
-        album.update(is_deleted=True, is_visible=False)
-    return redirect('gallery:album_detail', pk=kwargs['pk'])
-
-
-def content_delete_to_cart(request, *args, **kwargs):
-    album_content = models.AlbumContent.objects.filter(
-        album__id=kwargs['album__pk'], slug=kwargs['slug']
-    )
-    album_content.update(is_deleted=True, is_visible=False)
-    return redirect('gallery:image_detail', album__pk=kwargs['album__pk'], slug=kwargs['slug'])
+        delete_object(obj=object.cover.name)
+        return super().post(request, *args, **kwargs)
 
 
 class AlbumContentCreateView(LoginRequiredMixin, FormView):
@@ -136,23 +136,14 @@ class AlbumContentCreateView(LoginRequiredMixin, FormView):
     raise_exception = True
 
     def get_success_url(self, *args, **kwargs):
-        return reverse_lazy('gallery:album_detail', args=[self.kwargs['album__pk']])
-
-    def post(self, request, *args, **kwargs):
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+        return reverse_lazy('gallery:album_detail', args=[self.kwargs['album_pk']])
 
     def form_valid(self, form):
         files = form.cleaned_data['files']
         is_visible = form.cleaned_data['is_visible']
         is_deleted = form.cleaned_data['is_deleted']
 
-        album_obj = models.Album.objects.get(pk=self.kwargs['album__pk'])
+        album_obj = models.Album.objects.get(pk=self.kwargs['album_pk'])
 
         create(
             files=files,
@@ -181,9 +172,35 @@ class AlbumContentDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('gallery:album_detail')
     raise_exception = True
 
+    def get_success_url(self, *args, **kwargs):
+        return reverse_lazy('gallery:album_detail', args=[self.kwargs.get('album_pk')])
 
-class AlbumContentDeleteToCartView(LoginRequiredMixin, UpdateView):
-    model = models.Album
-    template_name = 'content/delete_to_cart.html'
-    success_url = reverse_lazy('gallery:album_detail')
-    raise_exception = True
+    def post(self, request, *args, **kwargs):
+        object = self.get_object()
+
+        if object:
+            delete_object(obj=object.file.name)
+        return super().post(request, *args, **kwargs)
+
+
+def album_content_delete_to_cart(request, *args, **kwargs):
+    album_content = models.AlbumContent.objects.filter(slug=kwargs.get('slug'))
+
+    if album_content:
+        with transaction.atomic():
+            album_content.update(is_deleted=True, is_visible=False)
+
+    return redirect('gallery:album_detail', pk=kwargs.get('album__pk'))
+
+
+def album_delete_to_cart(request, *args, **kwargs):
+    album = models.Album.objects.get(pk=kwargs.get('pk'))
+
+    if album:
+        album_contents = models.AlbumContent.objects.filter(album=album.first())
+
+        with transaction.atomic():
+            album_contents.update(is_deleted=True, is_visible=False)
+            album.update(is_deleted=True, is_visible=False)
+
+    return redirect('gallery:album_list')

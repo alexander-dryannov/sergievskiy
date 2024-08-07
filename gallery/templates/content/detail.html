@@ -3,7 +3,7 @@
 {% block content %}
     <div class="row justify-content-center">
         <div class="col-1">
-            <a href="{% url 'gallery:album_detail' request.resolver_match.kwargs.album__pk %}" class="btn btn-secondary" data-bs-toggle="tooltip"
+            <a href="{% url 'gallery:album_detail' request.resolver_match.kwargs.album_pk %}" class="btn btn-secondary" data-bs-toggle="tooltip"
                data-bs-placement="top"
                data-bs-title="Вернуться к альбомам">
                 <i class="fa-solid fa-arrow-rotate-left"></i>

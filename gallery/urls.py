@@ -15,28 +15,28 @@ urlpatterns = [
     path('album/<int:pk>/trash/', views.album_delete_to_cart, name='album_delete_to_cart'),
     # Content
     path(
-        '<int:album__pk>/content/create/',
+        '<int:album_pk>/content/create/',
         views.AlbumContentCreateView.as_view(),
         name='content_create',
     ),
     path(
-        'album/<int:album__pk>/<slug:slug>/',
+        'album/<int:album_pk>/<slug:slug>/',
         views.AlbumContentDetailView.as_view(),
         name='content_detail',
     ),
     path(
-        'album/<int:album__pk>/<slug:slug>/update/',
+        'album/<int:album_pk>/<slug:slug>/update/',
         views.AlbumContentUpdateView.as_view(),
         name='content_update',
     ),
     path(
-        'album/<int:album__pk>/<slug:slug>/delete/',
+        'album/<int:album_pk>/<slug:slug>/delete/',
         views.AlbumContentDeleteView.as_view(),
         name='content_delete',
     ),
     path(
-        'album/<int:album__pk>/<slug:slug>/trash/',
-        views.content_delete_to_cart,
+        'album/<int:album_pk>/<slug:slug>/trash/',
+        views.album_content_delete_to_cart,
         name='content_delete_to_cart',
     ),
 ]
