@@ -1,6 +1,6 @@
 [tool.isort]
 profile = 'black'
-src_paths = ['gallery', 'schedule', 'multimedia', 'snippets']
+src_paths = ['apps']
 lines_after_imports = 2
 multi_line_output = 3
 indent = 4
