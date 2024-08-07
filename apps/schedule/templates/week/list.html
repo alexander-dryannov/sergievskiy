@@ -4,19 +4,19 @@
 {% block title %}Расписание{% endblock %}
 
 {% block content %}
-    <div class="accordion" id="accordionExample">
+    <div class="accordion" id="accordionSchedule">
         {% for item in data %}
             {% if item.schedule|length > 0 %}
                 <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
+                    <h2 class="accordion-header" id="heading{{ item.week.id }}">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne"
-                                aria-expanded="true" aria-controls="collapseOne">
+                                data-bs-target="#heading{{ item.week.id }}"
+                                aria-expanded="true" aria-controls="{{ item.week.id }}">
                             {{ item.week.name }}
                         </button>
                     </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                         data-bs-parent="#accordionExample">
+                    <div id="heading{{ item.week.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ item.week.id }}"
+                         data-bs-parent="accordionSchedule">
                         <div class="accordion-body">
                             <table class="table">
                                 <thead>

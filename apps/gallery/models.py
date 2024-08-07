@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-
 from snippets.models import models as smodels
 
 from . import choices

@@ -1,5 +1,6 @@
 from django.conf import settings
 
+
 client = settings.MINIO_CLIENT
 
 

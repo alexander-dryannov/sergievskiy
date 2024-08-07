@@ -26,9 +26,9 @@ INSTALLED_APPS = [
     # 'django_ckeditor_5',
     'crispy_forms',
     'crispy_bootstrap5',
-    'gallery',
+    'apps.gallery',
     # 'multimedia',
-    'schedule',
+    'apps.schedule',
 ]
 
 MIDDLEWARE = [
@@ -41,7 +41,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'sergievskiy.urls'
+ROOT_URLCONF = 'project.urls'
 
 TEMPLATES = [
     {
@@ -61,7 +61,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'sergievskiy.wsgi.application'
+WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {

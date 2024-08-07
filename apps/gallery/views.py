@@ -1,17 +1,16 @@
 import os
 import uuid
 
-from django.contrib.auth.decorators import permission_required
-from minio import Minio
-
 from django.conf import settings
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, FormView, ListView, UpdateView
-
+from minio import Minio
 from snippets.minio.delete import delete_object
+
 from . import choices, models
 from .forms import AlbumContentForm, AlbumForm
 
