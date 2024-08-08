@@ -6,7 +6,6 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('gallery/', include('apps.gallery.urls')),
     # path('multimedia/', include('multimedia.urls')),
     path('schedule/', include('apps.schedule.urls')),
