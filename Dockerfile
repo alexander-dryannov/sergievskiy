@@ -15,8 +15,8 @@ RUN  apt update -y && apt upgrade -y && pip install --upgrade pip && pip install
 
 COPY . .
 
-RUN chmod +x /opt/app/project/deploy/run_uwsgi.sh
+RUN chmod +x /opt/app/project/deploy/entrypoint.sh
 
 EXPOSE 8000
 
-CMD ["/opt/app/project/deploy/run_uwsgi.sh"]
+CMD ["/opt/app/project/deploy/entrypoint.sh"]

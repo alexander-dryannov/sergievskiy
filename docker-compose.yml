@@ -16,8 +16,6 @@ services:
       - pg_data:/var/lib/postgresql/data/
     expose:
       - "5432"
-    ports:
-      - "5432:5432"
     healthcheck:
       test:  pg_isready --dbname=$$POSTGRES_DB --username=$$POSTGRES_USER
       interval: 10s
@@ -30,6 +28,7 @@ services:
       - ./.env
     build:
       context: .
+    command: gunicorn project.wsgi:application --bind 0.0.0.0:8000
     expose:
       - "8000"
     depends_on:

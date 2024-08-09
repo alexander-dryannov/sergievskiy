@@ -11,9 +11,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
+SITE_NAME = os.getenv('SITE_NAME', 'sergievskiy.backend')
+
 DEBUG = os.environ.get('DEBUG', False) == 'True'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    'sergievskiy.backend',
+    f'http://{SITE_NAME}',
+    f'https://{SITE_NAME}',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
