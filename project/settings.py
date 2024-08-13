@@ -34,8 +34,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'apps.gallery',
-    # 'multimedia',
+    # 'apps.multimedia',
     'apps.schedule',
+    'apps.posts',
 ]
 
 MIDDLEWARE = [
@@ -120,10 +121,7 @@ MINIO = os.environ.get('MINIO', False) == 'True'
 
 STATIC_URL = 'static/'
 
-if not STATIC:
-    STATIC_ROOT = ''
-
-STATICFILES_DIRS = ('static',)
+STATIC_ROOT = 'static'
 
 if not MEDIA:
     MEDIA_URL = 'media/'
