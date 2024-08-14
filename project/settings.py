@@ -129,6 +129,9 @@ if not MEDIA:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Количество постов на странице
+POSTS_PAGE_SIZE = os.environ.get('POSTS_PAGE_SIZE', 5)
+
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
