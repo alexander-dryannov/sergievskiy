@@ -19,6 +19,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
     'sergievskiy.backend',
+    f'{SITE_NAME}',
     f'http://{SITE_NAME}',
     f'https://{SITE_NAME}',
 ]
