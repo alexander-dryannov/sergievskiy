@@ -35,9 +35,10 @@ class Post(BasicModel):
     )
     title = models.CharField('Название', max_length=100)
     text = models.TextField('Текст')
-    typy_post = models.CharField(
+    type_post = models.CharField(
         'Тип поста', choices=TypePostEnum.choices, default=TypePostEnum.NEWS, max_length=100
     )
+    is_fixed = models.BooleanField('Закрепленный пост', default=False)
 
     def __str__(self):
         return self.title
