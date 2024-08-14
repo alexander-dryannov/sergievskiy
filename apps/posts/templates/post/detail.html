@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="text-center">{{ post.title }}</h2>
+    <div class="row flex-column">
+        <div class="col-sm-12 col-sm-10 col-xl-6 mt-3 mx-auto">
+            <div class="card border-0">
+                <div class="card-body" style="text-align: justify">
+                    <p class="card-text">{{ post.text | linebreaks }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

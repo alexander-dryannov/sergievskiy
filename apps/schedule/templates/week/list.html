@@ -4,48 +4,78 @@
 {% block title %}Расписание{% endblock %}
 
 {% block content %}
-    <div class="accordion" id="accordionSchedule">
-        {% for item in data %}
-            {% if item.schedule|length > 0 %}
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading{{ item.week.id }}">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#heading{{ item.week.id }}"
-                                aria-expanded="true" aria-controls="{{ item.week.id }}">
-                            {{ item.week.name }}
-                        </button>
-                    </h2>
-                    <div id="heading{{ item.week.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ item.week.id }}"
-                         data-bs-parent="accordionSchedule">
-                        <div class="accordion-body">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th scope="col">Дата</th>
-                                    <th scope="col">Кому служба</th>
-                                    <th scope="col">Время</th>
-                                    <th scope="col">Тип службы</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for schedule in item.schedule %}
-                                    <tr>
-                                        <td>{{ schedule.event.date }}</td>
-                                        <td>{{ schedule.to_whom|linebreaks }}</td>
-                                        <td>{{ schedule.event.time }}</td>
-                                        <td>
-                                            {% for ts in schedule.type_service.all %}
-                                                {{ ts.name }}
-                                            {% endfor %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
+    <h2 class="text-center mt-2">Расписание богослужений</h2>
+    {% for item in data %}
+        {% if item.schedule|length > 0 %}
+            <h3 class="text-center mt-5">{{ item.week.name }}</h3>
+            <table class="table mt-3">
+                <thead>
+                <tr>
+                    <th scope="col">Дата</th>
+                    <th scope="col">Кому служба</th>
+                    <th scope="col">Время</th>
+                    <th scope="col">Тип службы</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for schedule in item.schedule %}
+                    <tr>
+                        <td>{{ schedule.event.date }}</td>
+                        <td>{{ schedule.to_whom|linebreaks }}</td>
+                        <td>{{ schedule.event.time }}</td>
+                        <td>
+                            {% for ts in schedule.type_service.all %}
+                                {{ ts.name }}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endfor %}
+    {#    <div class="accordion" id="accordionSchedule">#}
+    {#        {% for item in data %}#}
+    {#            {% if item.schedule|length > 0 %}#}
+    {#                <div class="accordion-item">#}
+    {#                    <h2 class="accordion-header" id="heading{{ item.week.id }}">#}
+    {#                        <button class="accordion-button" type="button" data-bs-toggle="collapse"#}
+    {#                                data-bs-target="#heading{{ item.week.id }}"#}
+    {#                                aria-expanded="true" aria-controls="{{ item.week.id }}">#}
+    {#                            {{ item.week.name }}#}
+    {#                        </button>#}
+    {#                    </h2>#}
+    {#                    <div id="heading{{ item.week.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ item.week.id }}"#}
+    {#                         data-bs-parent="accordionSchedule">#}
+    {#                        <div class="accordion-body">#}
+    {#                            <table class="table">#}
+    {#                                <thead>#}
+    {#                                <tr>#}
+    {#                                    <th scope="col">Дата</th>#}
+    {#                                    <th scope="col">Кому служба</th>#}
+    {#                                    <th scope="col">Время</th>#}
+    {#                                    <th scope="col">Тип службы</th>#}
+    {#                                </tr>#}
+    {#                                </thead>#}
+    {#                                <tbody>#}
+    {#                                {% for schedule in item.schedule %}#}
+    {#                                    <tr>#}
+    {#                                        <td>{{ schedule.event.date }}</td>#}
+    {#                                        <td>{{ schedule.to_whom|linebreaks }}</td>#}
+    {#                                        <td>{{ schedule.event.time }}</td>#}
+    {#                                        <td>#}
+    {#                                            {% for ts in schedule.type_service.all %}#}
+    {#                                                {{ ts.name }}#}
+    {#                                            {% endfor %}#}
+    {#                                        </td>#}
+    {#                                    </tr>#}
+    {#                                {% endfor %}#}
+    {#                                </tbody>#}
+    {#                            </table>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            {% endif %}#}
+    {#        {% endfor %}#}
+    {#    </div>#}
 {% endblock %}
