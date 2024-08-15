@@ -24,7 +24,7 @@ ALLOWED_HOSTS = [
     f'https://{SITE_NAME}',
 ]
 
-CSRF_TRUSTED_ORIGINS = [f'https://{SITE_NAME}', f'http://{SITE_NAME}']
+CSRF_TRUSTED_ORIGINS = ','.join(os.environ.get('CSRF_TRUSTED_ORIGINS', []))
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'minio_storage',
     'crispy_forms',
     'crispy_bootstrap5',
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
