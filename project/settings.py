@@ -24,7 +24,11 @@ ALLOWED_HOSTS = [
     f'https://{SITE_NAME}',
 ]
 
-CSRF_TRUSTED_ORIGINS = ','.join((os.environ.get('CSRF_TRUSTED_ORIGINS', '*')).split(','))
+TRUST_HOSTS = ','.join((os.environ.get('CSRF_TRUSTED_ORIGINS', '*')).split(','))
+
+CSRF_TRUSTED_ORIGINS = []
+
+CSRF_TRUSTED_ORIGINS += TRUST_HOSTS
 
 INSTALLED_APPS = [
     'django.contrib.admin',
