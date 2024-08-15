@@ -6,7 +6,6 @@ volumes:
 
 services:
   db:
-    container_name: db
     image: postgres:latest
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
