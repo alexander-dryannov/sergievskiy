@@ -16,19 +16,14 @@ SITE_NAME = os.getenv('SITE_NAME', 'sergievskiy.backend')
 DEBUG = os.environ.get('DEBUG', False) == 'True'
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
-    'sergievskiy.backend',
-    f'{SITE_NAME}',
     f'http://{SITE_NAME}',
     f'https://{SITE_NAME}',
 ]
 
-TRUST_HOSTS = ','.join((os.environ.get('CSRF_TRUSTED_ORIGINS', '*')).split(','))
-
-CSRF_TRUSTED_ORIGINS = []
-
-CSRF_TRUSTED_ORIGINS += TRUST_HOSTS
+CSRF_TRUSTED_ORIGINS = [
+    f'http://{SITE_NAME}',
+    f'https://{SITE_NAME}',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
