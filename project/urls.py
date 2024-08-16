@@ -12,8 +12,8 @@ urlpatterns = [
     path('schedule/', include('apps.schedule.urls')),
 ]
 
-if settings.DEBUG and not settings.STATIC:
+if settings.DEBUG and not settings.MINIO_STATIC:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-if settings.DEBUG and not settings.MEDIA:
+if settings.DEBUG and not settings.MINIO_MEDIA:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -121,9 +121,9 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC = os.environ.get('STATIC', False) == 'True'
+MINIO_STATIC = os.environ.get('MINIO_STATIC', False) == 'True'
 
-MEDIA = os.environ.get('MEDIA', False) == 'True'
+MINIO_MEDIA = os.environ.get('MINIO_MEDIA', False) == 'True'
 
 MINIO = os.environ.get('MINIO', False) == 'True'
 
@@ -131,9 +131,9 @@ STATIC_URL = 'static/'
 
 STATIC_ROOT = 'static'
 
-if not MEDIA:
+if not MINIO_MEDIA:
     MEDIA_URL = 'media/'
-    MEDIA_ROOT = 'media'
+    # MEDIA_ROOT = 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
