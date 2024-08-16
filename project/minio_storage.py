@@ -8,11 +8,11 @@ load_dotenv()
 
 DEFAULT_FILE_STORAGE = 'minio_storage.storage.MinioMediaStorage'
 
-STATIC = os.environ.get('STATIC', False) == 'True'
+MINIO_STATIC = os.environ.get('MINIO_STATIC', False) == 'True'
 
-MEDIA = os.environ.get('MEDIA', False) == 'True'
+MINIO_MEDIA = os.environ.get('MINIO_MEDIA', False) == 'True'
 
-if STATIC:
+if MINIO_STATIC:
     STATICFILES_STORAGE = 'minio_storage.storage.MinioStaticStorage'
     MINIO_STORAGE_STATIC_BUCKET_NAME = os.getenv(
         'MINIO_STORAGE_STATIC_BUCKET_NAME', 'dev-sergievskiy-static'
@@ -21,7 +21,7 @@ if STATIC:
         os.environ.get('MINIO_STORAGE_AUTO_CREATE_STATIC_BUCKET', False) == 'True'
     )
 
-if MEDIA:
+if MINIO_MEDIA:
     MINIO_STORAGE_MEDIA_BUCKET_NAME = os.getenv(
         'MINIO_STORAGE_MEDIA_BUCKET_NAME', 'dev-sergievskiy-media'
     )

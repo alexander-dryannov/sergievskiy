@@ -13,15 +13,21 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 SITE_NAME = os.getenv('SITE_NAME', 'sergievskiy.backend')
 
+SITE_IP = os.getenv('SITE_IP', '127.0.0.1')
+
 DEBUG = os.environ.get('DEBUG', False) == 'True'
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
-    'sergievskiy.backend',
-    f'http://{SITE_NAME}',
-    f'https://{SITE_NAME}',
-]
+ALLOWED_HOSTS = [f'http://{SITE_NAME}', f'https://{SITE_NAME}', SITE_IP]
+
+CSRF_TRUSTED_ORIGINS = []
+
+if DEBUG:
+    ALLOWED_HOSTS.append('*')
+    CORS_ALLOW_ALL_ORIGINS = bool(DEBUG)
+else:
+    CSRF_TRUSTED_ORIGINS += ALLOWED_HOSTS
+
+ALLOWED_HOSTS = list(set(ALLOWED_HOSTS))
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -30,17 +36,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'minio_storage',
     'crispy_forms',
     'crispy_bootstrap5',
     'apps.gallery',
-    # 'multimedia',
+    # 'apps.multimedia',
     'apps.schedule',
+    'apps.posts',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -112,24 +121,24 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC = os.environ.get('STATIC', False) == 'True'
+MINIO_STATIC = os.environ.get('MINIO_STATIC', False) == 'True'
 
-MEDIA = os.environ.get('MEDIA', False) == 'True'
+MINIO_MEDIA = os.environ.get('MINIO_MEDIA', False) == 'True'
 
 MINIO = os.environ.get('MINIO', False) == 'True'
 
 STATIC_URL = 'static/'
 
-if not STATIC:
-    STATIC_ROOT = ''
+STATIC_ROOT = 'static'
 
-STATICFILES_DIRS = ('static',)
-
-if not MEDIA:
+if not MINIO_MEDIA:
     MEDIA_URL = 'media/'
-    MEDIA_ROOT = 'media'
+    # MEDIA_ROOT = 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Количество постов на странице
+POSTS_PAGE_SIZE = os.environ.get('POSTS_PAGE_SIZE', 5)
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
