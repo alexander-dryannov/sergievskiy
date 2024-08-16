@@ -19,6 +19,7 @@ DEBUG = os.environ.get('DEBUG', False) == 'True'
 
 ALLOWED_HOSTS = [f'http://{SITE_NAME}', f'https://{SITE_NAME}', SITE_IP]
 
+CSRF_TRUSTED_ORIGINS = []
 
 if DEBUG:
     ALLOWED_HOSTS.append('*')
