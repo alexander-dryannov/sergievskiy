@@ -13,17 +13,20 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 SITE_NAME = os.getenv('SITE_NAME', 'sergievskiy.backend')
 
+SITE_IP = os.getenv('SITE_IP', '127.0.0.1')
+
 DEBUG = os.environ.get('DEBUG', False) == 'True'
 
-ALLOWED_HOSTS = [
-    f'http://{SITE_NAME}',
-    f'https://{SITE_NAME}',
-]
+ALLOWED_HOSTS = [f'http://{SITE_NAME}', f'https://{SITE_NAME}', SITE_IP]
 
-CSRF_TRUSTED_ORIGINS = [
-    f'http://{SITE_NAME}',
-    f'https://{SITE_NAME}',
-]
+
+if DEBUG:
+    ALLOWED_HOSTS.append('*')
+    CORS_ALLOW_ALL_ORIGINS = bool(DEBUG)
+else:
+    CSRF_TRUSTED_ORIGINS += ALLOWED_HOSTS
+
+ALLOWED_HOSTS = list(set(ALLOWED_HOSTS))
 
 INSTALLED_APPS = [
     'django.contrib.admin',
