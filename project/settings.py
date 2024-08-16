@@ -38,12 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'minio_storage',
+    'solo',
     'crispy_forms',
     'crispy_bootstrap5',
     'apps.gallery',
     # 'apps.multimedia',
     'apps.schedule',
     'apps.posts',
+    'apps.about',
 ]
 
 MIDDLEWARE = [

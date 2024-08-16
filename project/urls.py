@@ -10,6 +10,7 @@ urlpatterns = [
     path('gallery/', include('apps.gallery.urls')),
     # path('multimedia/', include('multimedia.urls')),
     path('schedule/', include('apps.schedule.urls')),
+    path('about/', include('apps.about.urls')),
 ]
 
 if settings.DEBUG and not settings.MINIO_STATIC:
