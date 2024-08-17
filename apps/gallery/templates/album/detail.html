@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block css %}
-{% endblock %}
+{% block title %}Галерея | Альбом | {{ album.title }}{% endblock %}
 
 {% block content %}
     <div class="row justify-content-center">
@@ -14,7 +13,7 @@
             </a>
         </div>
         <div class="col-3">
-            <h2 class="text-center">{{ album.title }}</h2>
+            <h3 class="text-center">{{ album.title }}</h3>
         </div>
     </div>
     {% if request.user.is_staff %}

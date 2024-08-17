@@ -1,24 +1,30 @@
 {% extends 'base.html' %}
 
+{% block title %}Пожертвоване{% endblock %}
+
 {% block content %}
-    <h2 class="text-center">Пожертвования</h2>
-    <div class="row">
-        <div class="col-sm-12 col-md-6 col-xl-6 my-auto mt-5">
-            <img src="{{ requisites.qr_code.url }}" alt="qr-code" class="d-flex mx-auto">
+    <h3 class="text-center">Пожертвование</h3>
+    {% if requisites %}
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-xl-6 my-auto mt-5">
+                <img src="{{ requisites.qr_code.url }}" alt="qr-code" class="d-flex mx-auto">
+            </div>
+            <div class="col-sm-12 col-md-6 col-xl-6 mt-5">
+                <ul class="list-group">
+                    <li class="list-group-item"><b>ИНН:</b> {{ requisites.inn }}</li>
+                    <li class="list-group-item"><b>КПП:</b> {{ requisites.checkpoint }}</li>
+                    <li class="list-group-item"><b>ОГРН:</b> {{ requisites.ogrn }}</li>
+                    <li class="list-group-item"><b>ОКПО:</b> {{ requisites.okpo }}</li>
+                    <li class="list-group-item"><b>Расчетный счет:</b> {{ requisites.current_account }}</li>
+                    <li class="list-group-item"><b>Банк:</b> {{ requisites.bank }}</li>
+                    <li class="list-group-item"><b>БИК:</b> {{ requisites.bic }}</li>
+                    <li class="list-group-item"><b>Кор. счет:</b> {{ requisites.correspondent_account }}</li>
+                    <li class="list-group-item"><b>Наименование получателя платежа:</b> {{ requisites.name_payee }}</li>
+                    <li class="list-group-item"><b>Назначение платежа:</b> {{ requisites.purpose_payment }}</li>
+                </ul>
+            </div>
         </div>
-        <div class="col-sm-12 col-md-6 col-xl-6 mt-5">
-            <ul class="list-group">
-                <li class="list-group-item"><b>ИНН:</b> {{ requisites.inn }}</li>
-                <li class="list-group-item"><b>КПП:</b> {{ requisites.checkpoint }}</li>
-                <li class="list-group-item"><b>ОГРН:</b> {{ requisites.ogrn }}</li>
-                <li class="list-group-item"><b>ОКПО:</b> {{ requisites.okpo }}</li>
-                <li class="list-group-item"><b>Расчетный счет:</b> {{ requisites.current_account }}</li>
-                <li class="list-group-item"><b>Банк:</b> {{ requisites.bank }}</li>
-                <li class="list-group-item"><b>БИК:</b> {{ requisites.bic }}</li>
-                <li class="list-group-item"><b>Кор. счет:</b> {{ requisites.correspondent_account }}</li>
-                <li class="list-group-item"><b>Наименование получателя платежа:</b> {{ requisites.name_payee }}</li>
-                <li class="list-group-item"><b>Назначение платежа:</b> {{ requisites.purpose_payment }}</li>
-            </ul>
-        </div>
-    </div>
+    {% else %}
+        <p class="text-center text-muted mt-5">Информация добавляется</p>
+    {% endif %}
 {% endblock %}
