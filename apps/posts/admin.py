@@ -1,15 +1,15 @@
 from django.contrib import admin
 
-from apps.posts.models import Post, FixedPost
+from apps.posts import models
 
 
 @admin.action(description='Закрепить')
 def set_fixed_post(modeladmin, request, queryset):
     for obj in queryset:
-        FixedPost.objects.create(target=obj)
+        models.FixedPost.objects.create(target=obj)
 
 
-@admin.register(FixedPost)
+@admin.register(models.FixedPost)
 class FixedPostAdmin(admin.ModelAdmin):
     fields = ('target',)
     list_display = (
@@ -18,7 +18,7 @@ class FixedPostAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(Post)
+@admin.register(models.Post)
 class PostAdmin(admin.ModelAdmin):
     actions = [
         set_fixed_post,
