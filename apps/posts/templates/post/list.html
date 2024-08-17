@@ -1,38 +1,44 @@
 {% extends 'base.html' %}
 
+{% block title %}Новости{% endblock %}
+
 {% block content %}
-    <h2 class="text-center">Новости</h2>
-    <div class="row flex-column">
-        {% for fixed_post in fixed_posts %}
-            <div class="col-sm-12 col-sm-10 col-xl-6 mt-3 mx-auto">
-                <a href="{% url 'post-detail' fixed_post.id %}" class="text-decoration-none text-bg-light">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title text-center">{{ fixed_post.title }}</h5>
-                            <p class="card-text">{{ fixed_post.text | truncatewords:24 }}</p>
-                            <p class="text-muted text-end">{{ fixed_post.created_at.date }}</p>
+    <h3 class="text-center">Новости</h3>
+    {% if fixed_posts %}
+        <div class="row flex-column">
+            {% for fixed_post in fixed_posts %}
+                <div class="col-sm-12 col-sm-10 col-xl-6 mt-3 mx-auto">
+                    <a href="{% url 'post-detail' fixed_post.id %}" class="text-decoration-none text-bg-light">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">{{ fixed_post.title }}</h5>
+                                <p class="card-text">{{ fixed_post.text | truncatewords:24 }}</p>
+                                <p class="text-muted text-end">{{ fixed_post.created_at.date }}</p>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
-        {% for post in posts %}
-            <div class="col-sm-12 col-sm-10 col-xl-6 mt-3 mx-auto">
-                <a href="{% url 'post-detail' post.id %}" class="text-decoration-none text-bg-light">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title text-center">{{ post.title }}</h5>
-                            <p class="card-text">{{ post.text | truncatewords:24 }}</p>
-                            <p class="text-muted text-end">{{ post.created_at.date }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+            {% for post in posts %}
+                <div class="col-sm-12 col-sm-10 col-xl-6 mt-3 mx-auto">
+                    <a href="{% url 'post-detail' post.id %}" class="text-decoration-none text-bg-light">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">{{ post.title }}</h5>
+                                <p class="card-text">{{ post.text | truncatewords:24 }}</p>
+                                <p class="text-muted text-end">{{ post.created_at.date }}</p>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
+                    </a>
+                </div>
+            {% endfor %}
 
-        {% if posts|length > 0 %}
-            {% include 'pagination.html' with page=page_obj %}
-        {% endif %}
+            {% if posts|length > 0 %}
+                {% include 'pagination.html' with page=page_obj %}
+            {% endif %}
 
-    </div>
+        </div>
+    {% else %}
+        <p class="text-center text-muted mt-5">Информация добавляется</p>
+    {% endif %}
 {% endblock %}

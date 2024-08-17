@@ -1,38 +1,44 @@
 {% extends 'base.html' %}
 
-{% block content %}
-    <h2 class="text-center">Духовенство</h2>
-    {% for c in clergy %}
-        <div class="row mt-5 mx-auto">
-            <div class="col-sm-8 col-md-4">
-                {% if c.photo %}
-                    <img src="{{ c.photo.url }}" alt="" style="width: 100%">
-                {% else %}
-                    <divc class="card">
-                        <div class="card-body">Фотографии нет</div>
-                    </divc>
-                {% endif %}
-            </div>
+{% block title %}Духовенство{% endblock %}
 
-            <div class="col-sm-12 col-md-8">
-                <ul class="list-group">
-                    {% if c.rector_temple %}
-                        <li class="list-group-item text-center border-0"><b>Настоятель</b></li>
+{% block content %}
+    <h3 class="text-center">Духовенство</h3>
+    {% if clergy %}
+        {% for c in clergy %}
+            <div class="row mt-5 mx-auto">
+                <div class="col-sm-8 col-md-4">
+                    {% if c.photo %}
+                        <img src="{{ c.photo.url }}" alt="" style="width: 100%">
+                    {% else %}
+                        <divc class="card">
+                            <div class="card-body">Фотографии нет</div>
+                        </divc>
                     {% endif %}
-                    <li class="list-group-item text-center border-0"><b>{{ c.get_dignity_display }} {{ c.first_name }} {{ c.last_name }}</b></li>
-                    <li class="list-group-item border-0"><b>День рождения:</b> {{ c.birthday }}</li>
-                    {% if c.secular_education %}
-                        <li class="list-group-item border-0"><b>Светское образование:</b> {{ c.secular_education }}
-                        </li>{% endif %}
-                    {% if c.spiritual_education %}
-                        <li class="list-group-item border-0"><b>Духовное образование:</b> {{ c.spiritual_education }}
-                        </li>{% endif %}
-                    {% if c.consecrated %}
-                        <li class="list-group-item border-0"><b>Хиротонисан:</b> {{ c.consecrated }}</li>{% endif %}
-                    {% if c.namesake_day %}
-                        <li class="list-group-item border-0"><b>День тезоименитства:</b> {{ c.namesake_day }}</li>{% endif %}
-                </ul>
+                </div>
+
+                <div class="col-sm-12 col-md-8">
+                    <ul class="list-group">
+                        {% if c.rector_temple %}
+                            <li class="list-group-item text-center border-0"><b>Настоятель</b></li>
+                        {% endif %}
+                        <li class="list-group-item text-center border-0"><b>{{ c.get_dignity_display }} {{ c.first_name }} {{ c.last_name }}</b></li>
+                        <li class="list-group-item border-0"><b>День рождения:</b> {{ c.birthday }}</li>
+                        {% if c.secular_education %}
+                            <li class="list-group-item border-0"><b>Светское образование:</b> {{ c.secular_education }}
+                            </li>{% endif %}
+                        {% if c.spiritual_education %}
+                            <li class="list-group-item border-0"><b>Духовное образование:</b> {{ c.spiritual_education }}
+                            </li>{% endif %}
+                        {% if c.consecrated %}
+                            <li class="list-group-item border-0"><b>Хиротонисан:</b> {{ c.consecrated }}</li>{% endif %}
+                        {% if c.namesake_day %}
+                            <li class="list-group-item border-0"><b>День тезоименитства:</b> {{ c.namesake_day }}</li>{% endif %}
+                    </ul>
+                </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        <p class="text-center text-muted mt-5">Информация добавляется</p>
+    {% endif %}
 {% endblock %}
