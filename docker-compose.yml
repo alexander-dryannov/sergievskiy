@@ -3,6 +3,8 @@ name: sergievskiyhram
 volumes:
   pg_data:
     name: sergievskiy_pg_data
+  static:
+    name: sergievskiy_static_files
 
 services:
   db:
@@ -35,6 +37,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    volumes:
+      - static:/opt/app/staticfiles
     healthcheck:
       test: [ "CMD-SHELL", "curl http://localhost:8000/admin" ]
       interval: 30s
@@ -50,5 +54,6 @@ services:
     volumes:
       - ./project/deploy/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./project/deploy/nginx/sites.conf:/etc/nginx/conf.d/sites.conf
+      - static:/static/:ro
     depends_on:
       - app
