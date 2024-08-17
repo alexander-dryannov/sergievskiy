@@ -24,3 +24,10 @@ class RequisitesAdmin(admin.ModelAdmin):
         'current_account',
         'bank',
     )
+
+
+@admin.register(models.Clergy)
+class ClergyAdmin(admin.ModelAdmin):
+    list_display = ('last_name', 'first_name', 'dignity')
+    list_display_links = ('last_name', 'first_name', 'dignity')
+    search_fields = ('last_name', 'first_name', 'dignity')

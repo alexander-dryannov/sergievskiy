@@ -1,8 +1,12 @@
 from django.db import models
 from solo.models import SingletonModel
 
+from snippets.models.models import BasicModel
+
 
 class Contact(SingletonModel):
+    """Контакты"""
+
     address = models.CharField('Адрес храма', max_length=255)
     mobile_phone = models.CharField('Мобильный телефон', max_length=24)
     phone = models.CharField('Городской телефон', max_length=24, blank=True, null=True)
@@ -48,3 +52,51 @@ class Requisites(models.Model):
     class Meta:
         verbose_name = 'Банковские реквизиты'
         verbose_name_plural = 'Банковские реквизиты'
+
+
+class DignityEnum(models.TextChoices):
+    """Саны православной церкви"""
+
+    ARCHDEACON = 'Archdeacon', 'Архидьякон'
+    ARCHBISHOP = 'Archbishop', 'Архиепископ'
+    ARCHIMANDRITE = 'Archimandrite', 'Архимандрит'
+    DEACON = 'Deacon', 'Дьякон'
+    BISHOP = 'Bishop', 'Епископ'
+    ABBOT = 'Abbot', 'Игумен'
+    PRIEST = 'Priest', 'Иерей'
+    HIERODEACON = 'Hierodeacon', 'Иеродиакон'
+    HIEROMONK = 'Hieromonk', 'Иеромонах'
+    METROPOLITAN = 'Metropolitan', 'Митрополит'
+    PATRIARCH = 'Patriarch', 'Патриарх'
+    PROTODEACON = 'Protodeacon', 'Протодьякон'
+    ARCHPRIEST = 'Archpriest', 'Протоиерей'
+    PROTOPRESBYTER = 'Protopresbyter', 'Протопресвитер'
+
+
+class Clergy(BasicModel):
+    """Духовенство"""
+
+    last_name = models.CharField('Фамилия', max_length=50)
+    first_name = models.CharField('Имя', max_length=50)
+    middle_name = models.CharField('Отчество', max_length=50)
+    birthday = models.DateField('День рождения')
+    photo = models.ImageField('Фотография', upload_to='about/clergy', blank=True, null=True)
+    rector_temple = models.BooleanField('Настоятель храма', default=False)
+    dignity = models.CharField(
+        'Сан', choices=DignityEnum.choices, default=DignityEnum.PRIEST, max_length=50
+    )
+    secular_education = models.CharField(
+        'Светское образование', max_length=100, blank=True, null=True
+    )
+    spiritual_education = models.CharField(
+        'Духовное образование', max_length=100, blank=True, null=True
+    )
+    consecrated = models.CharField('Хиротонисан', max_length=20, blank=True, null=True)
+    namesake_day = models.CharField('День тезоименитства', max_length=20, blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.last_name}, {self.first_name}'
+
+    class Meta:
+        verbose_name = 'Духовенство'
+        verbose_name_plural = 'Духовенство'
