@@ -2,12 +2,12 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-    Альбом | Правка
+    Галерея | Правка альбома
 {% endblock %}
 
 {% block content %}
     <div class="row">
-        <h2 class="text-center mb-5">Редактирование альбома</h2>
+        <h3 class="text-center mb-5">Редактирование альбома</h3>
         <form method="post">
             {% csrf_token %}
             {{ form|crispy }}

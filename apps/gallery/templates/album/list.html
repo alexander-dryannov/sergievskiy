@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
+{% block title %}Галерея | Альбомы{% endblock %}
+
 {% block content %}
+    <h3 class="text-center">Галерея</h3>
     {% if request.user.is_staff %}
         <div class="row">
             <div class="col-12 mx-auto mb-5 text-center">
@@ -11,17 +14,21 @@
             </div>
         </div>
     {% endif %}
-    <div class="row">
-        <div class="grid mx-auto" data-masonry='{ "itemSelector": ".grid-item", "isFitWidth": true }'>
-            {% for album in albums %}
-                <a href="{{ album.get_absolute_url }}" class="card bg-dark text-white card-margin grid-item">
-                    <img src="{{ album.cover.url }}" style="width: 250px;" alt="{{ album.title }}">
-                        <div class="card-img-overlay overlay d-flex flex-column justify-content-center">
-                            <h5 class="card-title text-center">{{ album.title }}</h5>
-                            <p class="card-text text-white text-center"><small>{{ album.updated_at }}</small></p>
-                        </div>
-                    </a>
-            {% endfor %}
+    {% if albums %}
+        <div class="row">
+            <div class="grid mx-auto" data-masonry='{ "itemSelector": ".grid-item", "isFitWidth": true }'>
+                {% for album in albums %}
+                    <a href="{{ album.get_absolute_url }}" class="card bg-dark text-white card-margin grid-item">
+                        <img src="{{ album.cover.url }}" style="width: 250px;" alt="{{ album.title }}">
+                            <div class="card-img-overlay overlay d-flex flex-column justify-content-center">
+                                <h5 class="card-title text-center">{{ album.title }}</h5>
+                                <p class="card-text text-white text-center"><small>{{ album.updated_at }}</small></p>
+                            </div>
+                        </a>
+                {% endfor %}
+            </div>
         </div>
-    </div>
+    {% else %}
+        <p class="text-center text-muted mt-5">Информация добавляется</p>
+    {% endif %}
 {% endblock %}

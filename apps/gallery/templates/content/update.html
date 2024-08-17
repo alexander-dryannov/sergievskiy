@@ -8,7 +8,7 @@
 {% block content %}
     {{ request.resolver_match.kwargs }}
     <div class="row">
-        <h2 class="text-center mb-5">Редактирование изображения</h2>
+        <h3 class="text-center mb-5">Редактирование изображения</h3>
         <form method="post">
             {% csrf_token %}
             {{ form|crispy }}

@@ -1,31 +1,37 @@
 {% extends 'base.html' %}
 {% load solo_tags %}
 
+{% block title %}Контакты{% endblock %}
+
 {% block content %}
     {% get_solo 'about.Contact' as contact %}
-    <div class="row">
-        <div class="col-sm-12 col-md-8 col-xl-6 mx-auto">
-            <ul class="list-group">
-                <li class="list-group-item"><b>Адрес храма:</b> {{ contact.address }}</li>
-                <li class="list-group-item"><b>Мобильный телефон:</b> {{ contact.mobile_phone }}</li>
-                <li class="list-group-item"><b>Городской телефон:</b> {{ contact.phone }}</li>
-                <li class="list-group-item"><b>Электронная почта:</b> {{ contact.email }}</li>
-            </ul>
-        </div>
-    </div>
-
-
-    {% if contact.map %}
+    <h3 class="text-center">Контакты</h3>
+    {% if contact.address %}
         <div class="row mt-5">
-            <div class="col-12">
-                {{ contact.map|safe }}
+            <div class="col-sm-12 col-md-8 col-xl-6 mx-auto">
+                <ul class="list-group">
+                    <li class="list-group-item"><b>Адрес храма:</b> {{ contact.address }}</li>
+                    <li class="list-group-item"><b>Мобильный телефон:</b> {{ contact.mobile_phone }}</li>
+                    <li class="list-group-item"><b>Городской телефон:</b> {{ contact.phone }}</li>
+                    <li class="list-group-item"><b>Электронная почта:</b> {{ contact.email }}</li>
+                </ul>
             </div>
         </div>
-    {% elif contact.image_map %}
-        <div class="row mt-5">
-            <div class="col-12">
-                <img src="{{ contact.image_map.url }}" alt="Карта храма">
+
+        {% if contact.map %}
+            <div class="row mt-5">
+                <div class="col-12">
+                    {{ contact.map|safe }}
+                </div>
             </div>
-        </div>
+        {% elif contact.image_map %}
+            <div class="row mt-5">
+                <div class="col-12">
+                    <img src="{{ contact.image_map.url }}" alt="Карта храма">
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <p class="text-center text-muted mt-5">Информация добавляется</p>
     {% endif %}
 {% endblock content %}
