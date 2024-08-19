@@ -19,8 +19,10 @@
                     </a>
                 </div>
             {% endfor %}
+        </div>
     {% elif posts %}
-            {% for post in posts %}
+        {% for post in posts %}
+            <div class="row flex-column">
                 <div class="col-sm-12 col-sm-10 col-xl-6 mt-3 mx-auto">
                     <a href="{% url 'post-detail' post.id %}" class="text-decoration-none text-bg-light">
                         <div class="card">
@@ -32,13 +34,11 @@
                         </div>
                     </a>
                 </div>
-            {% endfor %}
-
-            {% if posts|length > 0 %}
-                {% include 'pagination.html' with page=page_obj %}
-            {% endif %}
-
-        </div>
+            </div>
+        {% endfor %}
+{#        {% if posts|length > 0 %}#}
+{#            {% include 'pagination.html' with page=page_obj %}#}
+{#        {% endif %}#}
     {% else %}
         <p class="text-center text-muted mt-5">Информация добавляется</p>
     {% endif %}
