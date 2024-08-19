@@ -36,10 +36,11 @@
     {% endif %}
     <div class="row mt-5 mx-auto">
         <div class="col-sm-12 col-md-6">
-            <img src="{{ albumcontent.file.url }}" width="400" alt="">
+            <div class="card">
+                <img src="{{ albumcontent.file.url }}" width="400" alt="" class="card-img-top">
+            </div>
         </div>
         <div class="col-sm-12 col-md-6 align-items-end">
-            <h4>Описание:</h4>
             <ul class="list-group">
                 <li class="list-group-item">Загружено: {{ albumcontent.created_at }}</li>
                 <li class="list-group-item">Последнее обновление: {{ albumcontent.updated_at }}</li>
