@@ -36,9 +36,9 @@
                 </div>
             </div>
         {% endfor %}
-{#        {% if posts|length > 0 %}#}
-{#            {% include 'pagination.html' with page=page_obj %}#}
-{#        {% endif %}#}
+        {% if posts|length > 0 %}
+            {% include 'pagination.html' with page=page_obj %}
+        {% endif %}
     {% else %}
         <p class="text-center text-muted mt-5">Информация добавляется</p>
     {% endif %}
