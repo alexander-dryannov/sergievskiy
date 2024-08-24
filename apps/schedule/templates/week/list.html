@@ -1,52 +1,36 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load l10n %}
 
 {% block title %}Расписание{% endblock %}
 
 {% block content %}
     <h3 class="text-center mt-2">Расписание богослужений</h3>
-    {% for d in data %}
-        <h4 class="text-center mt-5">{{ d.week.name }}</h4>
-        <div class="table-responsive">
-            <table class="table table-bordered mt-3">
-                <thead>
-                <tr class="text-center">
-                    <th scope="col">Дата</th>
-                    <th scope="col">Кому служба</th>
-                    <th scope="col">Время</th>
-                    <th scope="col">Тип службы</th>
-                </tr>
-                </thead>
-                <tbody class="align-middle">
-                {% for key, values in d.schedule.items %}
-                    <tr>
-                        <td class="text-center">
-                            {% localize on %}{{ key }}{% endlocalize %}
-                        </td>
-                        <td>
-                            {% for schedule in values %}
-                                {{ schedule.to_whom|linebreaks }}
-                            {% endfor %}
-                        </td>
+    {% for week in weeks %}
+        <h4 class="text-center mt-5">{{ week.week.name }}</h4>
+        {% for item in week.days_and_events %}
+            <h5 class="mt-5 text-center">{{ item.day.date|date:"l" }}</h5>
+            <h6 class="text-center">{{ item.day.date }}</h6>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <ul class="list-group">
+                        {% for event in item.events %}
+                            <li class="list-group-item border-0" style="font-size: 14px;text-align: center">
+                                <div class="row">
 
-                        <td>
-                            {% for schedule in values %}
-                                {{ schedule.event|date:"H:m"|linebreaks }}
-                            {% endfor %}
-                        </td>
-                        <td>
-                            {% for schedule in values %}
-                                {% for ts in schedule.type_service.all %}
-                                    {{ ts.name|linebreaks }}
-                                {% endfor %}
-                            {% endfor %}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
+                                    <div class="col-6 align-middle">{{ event.to_whom|linebreaks }}</div>
+                                    <div class="col-2" style="font-weight: bold;">{{ event.time }}</div>
+                                    <div class="col-4" style="font-weight: bold;">
+                                        {% for ts in event.type_service.all %}
+                                            {{ ts.name|linebreaks }}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+        <br>
     {% endfor %}
 {% endblock %}
