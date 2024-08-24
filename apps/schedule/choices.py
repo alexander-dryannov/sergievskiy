@@ -1,15 +1,15 @@
-# TODO: Не нужно?
 from django.db import models
 
 
-class ServiceType(models.TextChoices):
-    """Виды службы"""
-
-    AKATHIST = 'Akathist', 'Акафист'
-    ALL_NIGHT_VIGIL = 'All-night vigil', 'Всенощное бдение'
-    DIVINE_LITURGY = 'Divine Liturgy', 'Божественная литургия'
-    EARLY_DIVINE_LITURGY = 'Early Divine Liturgy', 'Ранняя Божественная литургия'
-    LATE_DIVINE_LITURGY = 'Late Divine Liturgy', 'Поздняя Божественная литургия'
-    Lithium = 'Lithium', 'Лития'
-    MEMORIAL_SERVICE = 'Memorial service', 'Панихида'
+class ServiceTypeEnum(models.TextChoices):
     PRAYER_SERVICE = 'Prayer service', 'Молебен'
+    LITHIUM = 'Lithium', 'Лития'
+    MEMORIAL_SERVICE = 'Memorial service', 'Панихида'
+    AKATHIST = 'Akathist', 'Акафист'
+    VESPERS = 'Vespers', 'Вечерня'
+    MATINS = 'Matins', 'Утреня'
+    ALL_NIGHT_VIGIL = 'All-night vigil', 'Всенощное бдение'
+    WATCH = 'Watch', 'Часы'
+    LITURGY = 'Liturgy', 'Божественная литургия'
+    COMPLINE = 'Compline', 'Повечерие'
+    MIDNIGHT = 'Midnight', 'Полунощница'
