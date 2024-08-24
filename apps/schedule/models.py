@@ -49,6 +49,9 @@ class Event(BasicModel):
     type_service = models.ManyToManyField(ServiceType, verbose_name='Тип службы', blank=True)
     time = models.TimeField('Время')
     to_whom = models.TextField('Кому служба', blank=True, null=True)
+    is_holiday = models.BooleanField(
+        'Праздничный событие', default=False, help_text='Для окраски названия службы в красный'
+    )
 
     def __str__(self):
         return f'{self.day.date} | {self.time}'

@@ -16,10 +16,9 @@
                         {% for event in item.events %}
                             <li class="list-group-item border-0" style="font-size: 14px;text-align: center">
                                 <div class="row">
-
                                     <div class="col-6 align-middle">{{ event.to_whom|linebreaks }}</div>
                                     <div class="col-2" style="font-weight: bold;">{{ event.time }}</div>
-                                    <div class="col-4" style="font-weight: bold;">
+                                    <div class="col-4{% if event.is_holiday %} text-danger{% endif %}" style="font-weight: bold;">
                                         {% for ts in event.type_service.all %}
                                             {{ ts.name|linebreaks }}
                                         {% endfor %}
