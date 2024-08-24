@@ -8,14 +8,18 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
             name='Day',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name='ID'
+                    ),
+                ),
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Создано')),
                 ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Обновлено')),
                 ('is_visible', models.BooleanField(default=True, verbose_name='Видимый')),
@@ -29,7 +33,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ServiceType',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name='ID'
+                    ),
+                ),
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Создано')),
                 ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Обновлено')),
                 ('is_visible', models.BooleanField(default=True, verbose_name='Видимый')),
@@ -43,12 +52,25 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Week',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name='ID'
+                    ),
+                ),
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Создано')),
                 ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Обновлено')),
                 ('is_visible', models.BooleanField(default=True, verbose_name='Видимый')),
                 ('name', models.CharField(max_length=100, verbose_name='Название седмицы')),
-                ('short_name', models.CharField(blank=True, max_length=100, null=True, verbose_name='Короткое название седмицы')),
+                (
+                    'short_name',
+                    models.CharField(
+                        blank=True,
+                        max_length=100,
+                        null=True,
+                        verbose_name='Короткое название седмицы',
+                    ),
+                ),
             ],
             options={
                 'verbose_name': 'Седмица',
@@ -58,14 +80,31 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Event',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name='ID'
+                    ),
+                ),
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Создано')),
                 ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Обновлено')),
                 ('is_visible', models.BooleanField(default=True, verbose_name='Видимый')),
                 ('time', models.TimeField(verbose_name='Время')),
                 ('to_whom', models.TextField(blank=True, null=True, verbose_name='Кому служба')),
-                ('day', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='schedule.day', verbose_name='День')),
-                ('type_service', models.ManyToManyField(blank=True, to='schedule.servicetype')),
+                (
+                    'day',
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to='schedule.day',
+                        verbose_name='День',
+                    ),
+                ),
+                (
+                    'type_service',
+                    models.ManyToManyField(
+                        blank=True, verbose_name='Тип службы', to='schedule.servicetype'
+                    ),
+                ),
             ],
             options={
                 'verbose_name': 'Событие',
@@ -75,6 +114,10 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='day',
             name='week',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='schedule.week', verbose_name='Седмица'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                to='schedule.week',
+                verbose_name='Седмица',
+            ),
         ),
     ]

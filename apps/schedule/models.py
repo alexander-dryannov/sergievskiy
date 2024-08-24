@@ -46,7 +46,7 @@ class Day(BasicModel):
 
 class Event(BasicModel):
     day = models.ForeignKey(Day, verbose_name='День', on_delete=models.PROTECT)
-    type_service = models.ManyToManyField(ServiceType, blank=True)
+    type_service = models.ManyToManyField(ServiceType, verbose_name='Тип службы', blank=True)
     time = models.TimeField('Время')
     to_whom = models.TextField('Кому служба', blank=True, null=True)
 
