@@ -21,7 +21,7 @@ def delete_from_minio(modeladmin, request, queryset):
             delete_object(obj=obj.file.name)
 
     queryset.delete()
-    messages.success(request, 'Выбранные объекты удалены окончательно')
+    messages.success(request, 'Выбранные объекты удалены')
 
 
 @admin.action(description='Переместить в корзину')
