@@ -41,9 +41,9 @@
             </ul>
             <ul class="nav align-items-center">
                 {% if request.user.is_authenticated %}
-                  <li>
-                    <span>{{ request.user.first_name }} {{ request.user.last_name | slice:":1" }}.</span>
-                  </li>
+                    <li>
+                        <span>{{ request.user.first_name }} {{ request.user.last_name | slice:":1" }}.</span>
+                    </li>
                 {% endif %}
                 <li class="nav-item">
                     {% if request.user.is_staff %}
@@ -71,7 +71,7 @@
     </main><!--main-->
     <footer class="footer mt-4">
         <ul class="nav py-3">
-            <li class="nav-item mx-auto">
+            <li class="nav-item mx-auto text-center">
                 Храм Святого Преподобного Сергия Радонежского. Балашихинская и Орехово-Зуевская епархия. Балашихинское
                 благочиние Русской Православной церкви.
             </li>

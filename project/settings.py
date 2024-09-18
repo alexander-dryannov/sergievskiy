@@ -25,7 +25,7 @@ if DEBUG:
     ALLOWED_HOSTS.append('*')
     CORS_ALLOW_ALL_ORIGINS = bool(DEBUG)
 else:
-    CSRF_TRUSTED_ORIGINS += ALLOWED_HOSTS
+    CSRF_TRUSTED_ORIGINS += [f'http://{SITE_NAME}', f'https://{SITE_NAME}']
 
 ALLOWED_HOSTS = list(set(ALLOWED_HOSTS))
 
@@ -121,7 +121,7 @@ TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 MINIO_STATIC = os.environ.get('MINIO_STATIC', False) == 'True'
 

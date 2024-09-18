@@ -1,0 +1,25 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block after_related_objects %}
+    {{ block.super }}
+    <h1>Добавить файлы к альбому</h1>
+    <fieldset class="module aligned ">
+        <div class="form-row">
+            <div>
+                <div class="flex-container">
+                    <label for="upload_files">Загрузить файлы:</label>
+                    <input type="file"
+                           id="upload_files"
+                           value="Загрузить файлы"
+                           name="upload_files"
+                           style="white-space: normal"
+                           multiple
+                    >
+                </div>
+            </div>
+
+        </div>
+    </fieldset>
+
+{% endblock %}

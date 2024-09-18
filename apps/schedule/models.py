@@ -1,13 +1,30 @@
 from django.db import models
+
 from snippets.models.models import BasicModel
 
 
-class Week(BasicModel):
-    """Седмица (неделя)"""
-
-    name = models.CharField(max_length=255)
+class ServiceType(BasicModel):
+    name = models.CharField('Тип службы')
+    ordering = models.PositiveSmallIntegerField('Сортировка', default=0)
 
     def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['ordering']
+        verbose_name = 'Тип службы'
+        verbose_name_plural = 'Типы служб'
+
+
+class Week(BasicModel):
+    name = models.CharField('Название седмицы', max_length=100)
+    short_name = models.CharField(
+        'Короткое название седмицы', max_length=100, null=True, blank=True
+    )
+
+    def __str__(self):
+        if self.short_name:
+            return self.short_name
         return self.name
 
     class Meta:
@@ -15,36 +32,32 @@ class Week(BasicModel):
         verbose_name_plural = 'Седмицы'
 
 
-class ServiceType(BasicModel):
-    """Тип службы"""
-
-    name = models.CharField('Название службы', max_length=255, unique=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Тип службы'
-        verbose_name_plural = 'Тип служб'
-
-
-class Schedule(BasicModel):
-    """Расписание"""
-
-    week = models.ForeignKey(
-        Week, related_name='weeks', verbose_name='Седмица', on_delete=models.PROTECT
-    )
-    event = models.DateTimeField('Дата и время события')
-    to_whom = models.TextField(
-        'Кому служба',
-    )
-    type_service = models.ManyToManyField(
-        ServiceType, related_name='services', verbose_name='Тип службы'
+class Day(BasicModel):
+    week = models.ForeignKey(Week, verbose_name='Седмица', on_delete=models.PROTECT)
+    date = models.DateField('Дата')
+    to_whom = models.TextField('Кому служба', blank=True, null=True)
+    is_holiday = models.BooleanField(
+        'Праздник', default=False, help_text='Для окраски дня службы в красный'
     )
 
     def __str__(self):
-        return f'{self.event}'
+        if self.week.short_name:
+            return f'{self.week.short_name} | {self.date}'
+        return f'{self.date}'
 
     class Meta:
-        verbose_name = 'Расписание богослужений'
-        verbose_name_plural = 'Расписание богослужений'
+        verbose_name = 'Богослужебный день'
+        verbose_name_plural = 'Богослужебные дни'
+
+
+class Event(BasicModel):
+    day = models.ForeignKey(Day, verbose_name='День', on_delete=models.PROTECT)
+    type_service = models.ManyToManyField(ServiceType, verbose_name='Тип службы', blank=True)
+    time = models.TimeField('Время')
+
+    def __str__(self):
+        return f'{self.day.date} | {self.time}'
+
+    class Meta:
+        verbose_name = 'Событие'
+        verbose_name_plural = 'События'

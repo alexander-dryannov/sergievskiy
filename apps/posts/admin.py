@@ -23,7 +23,7 @@ class PostAdmin(admin.ModelAdmin):
     actions = [
         set_fixed_post,
     ]
-    fields = ('title', 'author', 'text', 'created_at', 'updated_at')
+    fields = ('title', 'author', 'text', 'is_visible', 'created_at', 'updated_at')
     list_display = ('id', 'title', 'author')
     list_display_links = ('id', 'title')
     list_filter = ('created_at', 'author')
