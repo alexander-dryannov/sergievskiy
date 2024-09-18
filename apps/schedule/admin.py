@@ -23,7 +23,7 @@ class WeekAdmin(admin.ModelAdmin):
 
 @admin.register(models.ServiceType)
 class ServiceTypeAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name']
+    list_display = ['id', 'name', 'ordering']
     list_display_links = ['id', 'name']
     change_list_template = 'admin/schedule/servicetype/change_list.html'
 

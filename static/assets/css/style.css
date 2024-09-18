@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Comforter+Brush&family=Marck+Script&family=Pattaya&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
 @font-face {
   font-family: "Vezitsa";
   src: url("../fonts/Vezitsa.ttf") format("ttf");
@@ -15,7 +16,7 @@ html, body {
   color: #303952;
 }
 .nav-item .nav-link:hover {
-  color: #dfe4ea;
+  color: #747d8c;
 }
 
 .wrapper {
@@ -69,6 +70,10 @@ html, body {
 
 h2, h3, h4, h5 {
   font-family: "Vezitsa";
+}
+
+.day-title {
+  font-family: "Great Vibes", cursive;
 }
 
 /*# sourceMappingURL=style.css.map */

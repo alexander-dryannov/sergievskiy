@@ -4,32 +4,38 @@
 {% block title %}Расписание{% endblock %}
 
 {% block content %}
-    <h3 class="text-center mt-2">Расписание богослужений</h3>
+    <h2 class="text-center mt-2">Расписание богослужений</h2>
     {% for week in weeks %}
-        <h4 class="text-center mt-5">{{ week.week.name }}</h4>
-        {% for item in week.days_and_events %}
-            <h5 class="mt-5 text-center">{{ item.day.date|date:"l" }}</h5>
-            <h6 class="text-center">{{ item.day.date }}</h6>
-            <div class="row mt-4">
-                <div class="col-12">
-                    <ul class="list-group">
-                        {% for event in item.events %}
-                            <li class="list-group-item border-0" style="font-size: 14px;text-align: center">
-                                <div class="row">
-                                    <div class="col-6 align-middle">{{ event.to_whom|linebreaks }}</div>
-                                    <div class="col-2" style="font-weight: bold;">{{ event.time }}</div>
-                                    <div class="col-4{% if event.is_holiday %} text-danger{% endif %}" style="font-weight: bold;">
-                                        {% for ts in event.type_service.all %}
-                                            {{ ts.name|linebreaks }}
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </li>
-                        {% endfor %}
-                    </ul>
+        <h3 class="text-center mt-5 fw-bold">{{ week.week.name }}</h3>
+        <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
+            {% for item in week.days_and_events %}
+                <div class="col">
+                    <div class="card border border-2 h-100 {% if item.day.is_holiday %}border-danger{% endif %}">
+                        <div class="card-body">
+                            <h4 class="card-title text-center day-title fs-1 fw-bold {% if item.day.is_holiday %}text-danger{% endif %}">{{ item.day.date|date:"l" }}</h4>
+                            <h6 class="card-title text-center">{{ item.day.date }}</h6>
+                        </div>
+                        <div class="card-body">
+                            {% for event in item.events %}
+                                <span class="fw-bold mt-3 fs-4">{{ event.time }}</span>
+                                &nbsp;&nbsp;
+                                <span class="fs-4">
+                                    {{ event.type_service.all|join:", " }}
+                                </span>
+                                {% if forloop.last %}
+                                    <br>
+                                {% else %}
+                                    <br>
+                                    <br>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="card-body fs-4">
+                            {{ item.day.to_whom|linebreaks }}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
-        <br>
+            {% endfor %}
+        </div>
     {% endfor %}
 {% endblock %}

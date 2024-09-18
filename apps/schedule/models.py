@@ -5,11 +5,13 @@ from snippets.models.models import BasicModel
 
 class ServiceType(BasicModel):
     name = models.CharField('Тип службы')
+    ordering = models.PositiveSmallIntegerField('Сортировка', default=0)
 
     def __str__(self):
         return self.name
 
     class Meta:
+        ordering = ['ordering']
         verbose_name = 'Тип службы'
         verbose_name_plural = 'Типы служб'
 
@@ -33,6 +35,10 @@ class Week(BasicModel):
 class Day(BasicModel):
     week = models.ForeignKey(Week, verbose_name='Седмица', on_delete=models.PROTECT)
     date = models.DateField('Дата')
+    to_whom = models.TextField('Кому служба', blank=True, null=True)
+    is_holiday = models.BooleanField(
+        'Праздник', default=False, help_text='Для окраски дня службы в красный'
+    )
 
     def __str__(self):
         if self.week.short_name:
@@ -48,10 +54,6 @@ class Event(BasicModel):
     day = models.ForeignKey(Day, verbose_name='День', on_delete=models.PROTECT)
     type_service = models.ManyToManyField(ServiceType, verbose_name='Тип службы', blank=True)
     time = models.TimeField('Время')
-    to_whom = models.TextField('Кому служба', blank=True, null=True)
-    is_holiday = models.BooleanField(
-        'Праздничный событие', default=False, help_text='Для окраски названия службы в красный'
-    )
 
     def __str__(self):
         return f'{self.day.date} | {self.time}'
