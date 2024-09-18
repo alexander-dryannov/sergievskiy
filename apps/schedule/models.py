@@ -42,7 +42,7 @@ class Day(BasicModel):
 
     def __str__(self):
         if self.week.short_name:
-            return f'{self.week.short_name} | { self.date}'
+            return f'{self.week.short_name} | {self.date}'
         return f'{self.date}'
 
     class Meta:
