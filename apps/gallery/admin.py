@@ -1,9 +1,7 @@
 from django.contrib import admin
-from django.http import HttpResponseRedirect
-from django.urls import reverse, path
 
 from . import models
-from .views import create
+from .handlers import create
 
 
 @admin.register(models.AlbumContent)

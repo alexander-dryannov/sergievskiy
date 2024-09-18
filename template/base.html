@@ -41,9 +41,9 @@
             </ul>
             <ul class="nav align-items-center">
                 {% if request.user.is_authenticated %}
-                  <li>
-                    <span>{{ request.user.first_name }} {{ request.user.last_name | slice:":1" }}.</span>
-                  </li>
+                    <li>
+                        <span>{{ request.user.first_name }} {{ request.user.last_name | slice:":1" }}.</span>
+                    </li>
                 {% endif %}
                 <li class="nav-item">
                     {% if request.user.is_staff %}
