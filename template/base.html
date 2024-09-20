@@ -39,24 +39,6 @@
                     </a>
                 </li>
             </ul>
-            <ul class="nav align-items-center">
-                {% if request.user.is_authenticated %}
-                    <li>
-                        <span>{{ request.user.first_name }} {{ request.user.last_name | slice:":1" }}.</span>
-                    </li>
-                {% endif %}
-                <li class="nav-item">
-                    {% if request.user.is_staff %}
-                        <a class="nav-link" href="#">
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                        </a>
-                    {% else %}
-                        <a class="nav-link" href="#">
-                            <i class="fa-solid fa-arrow-right-to-bracket"></i>
-                        </a>
-                    {% endif %}
-                </li>
-            </ul>
         </div>
         <h1 class="header-title text-center my-5">Храм Сергия Радонежского в Балашихе</h1>
         <div class="header-middle">
