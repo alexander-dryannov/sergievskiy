@@ -51,7 +51,11 @@ class AlbumAdmin(admin.ModelAdmin):
         return actions
 
     def save_model(self, request, obj, form, change):
-        files = request.FILES.pop('upload_files')
+        try:
+            files = request.FILES.pop('upload_files')
+        except KeyError:
+            files = None
+
         obj.save()
 
         if files:
