@@ -6,5 +6,5 @@ from . import views
 app_name = 'schedule'
 
 urlpatterns = [
-    path('weeks/', views.WeekScheduleListView.as_view(), name='week_schedule_list'),
+    path('weeks/', views.week_schedule, name='week_schedule_list'),
 ]
