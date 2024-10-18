@@ -18,9 +18,9 @@
                             </div>
                             <div class="card-body">
                                 {% for event in item.events %}
-                                    <span class="fw-bold mt-3 fs-4">{{ event.time }}</span>
+                                    <span class="fw-bold mt-3 fs-4 {% if event.is_holiday %}text-danger{% endif %}">{{ event.time }}</span>
                                     &nbsp;&nbsp;
-                                    <span class="fs-4">
+                                    <span class="fs-4 {% if event.is_holiday %}text-danger{% endif %}">
                                             {{ event.type_service.all|join:", " }}
                                         </span>
                                     {% if forloop.last %}
@@ -31,7 +31,7 @@
                                     {% endif %}
                                 {% endfor %}
                             </div>
-                            <div class="card-body fs-4">
+                            <div class="card-body fs-4 {% if event.is_holiday %}text-danger{% endif %}">
                                 {{ item.day.to_whom|linebreaks }}
                             </div>
                         </div>

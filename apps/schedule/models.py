@@ -4,6 +4,8 @@ from snippets.models.models import BasicModel
 
 
 class ServiceType(BasicModel):
+    """Тип службы"""
+
     name = models.CharField('Тип службы')
     ordering = models.PositiveSmallIntegerField('Сортировка', default=0)
 
@@ -17,6 +19,8 @@ class ServiceType(BasicModel):
 
 
 class Week(BasicModel):
+    """Неделя (седмица)"""
+
     name = models.CharField('Название седмицы', max_length=100)
     short_name = models.CharField(
         'Короткое название седмицы', max_length=100, null=True, blank=True
@@ -33,6 +37,8 @@ class Week(BasicModel):
 
 
 class Day(BasicModel):
+    """День"""
+
     week = models.ForeignKey(Week, verbose_name='Седмица', on_delete=models.PROTECT)
     date = models.DateField('Дата')
     to_whom = models.TextField('Кому служба', blank=True, null=True)
@@ -51,9 +57,14 @@ class Day(BasicModel):
 
 
 class Event(BasicModel):
+    """Событие"""
+    
     day = models.ForeignKey(Day, verbose_name='День', on_delete=models.PROTECT)
     type_service = models.ManyToManyField(ServiceType, verbose_name='Тип службы', blank=True)
     time = models.TimeField('Время')
+    is_holiday = models.BooleanField(
+        'Праздник', default=False, help_text='Для окраски дня службы в красный'
+    )
 
     def __str__(self):
         return f'{self.day.date} | {self.time}'
