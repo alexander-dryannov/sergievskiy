@@ -8,10 +8,12 @@ from .choices import ServiceTypeEnum
 
 class DayInline(admin.StackedInline):
     model = models.Day
+    extra = 0
 
 
 class EventInline(admin.StackedInline):
     model = models.Event
+    extra = 0
 
 
 @admin.register(models.Week)
