@@ -19,6 +19,9 @@ def week_schedule(request):
                 days_filter = days.filter(week=week)
                 data = {'week': week, 'days_and_events': []}
 
+                if not days_filter:
+                    continue
+
                 for day in days_filter:
                     data['days_and_events'].append(
                         {'day': day, 'events': models.Event.objects.filter(day=day, is_visible=True)}
