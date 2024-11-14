@@ -6,9 +6,9 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV DJANGO_SETTINGS_MODULE 'project.settings'
 
-COPY project/requirements/base.txt base.txt
+COPY requirements.txt requirements.txt
 
-RUN apt update -y && apt upgrade -y && pip install --upgrade pip && pip install -r base.txt
+RUN apt update -y && apt upgrade -y && pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
 

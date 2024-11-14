@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Расписание{% endblock %}
+
+{% block content %}
+    {% for day in days %}
+        {{ day.event_set.all }}
+    {% endfor %}
+{% endblock %}

@@ -58,8 +58,13 @@ class DayAdmin(admin.ModelAdmin):
 
 @admin.register(models.Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ['id', 'time', 'get_services']
+    list_display = ['id', 'get_day', 'time', 'get_services']
     list_display_links = ['id', 'time']
 
+    @admin.display(description='Дата службы', ordering='day__date')
+    def get_day(self, obj):
+        return obj.day.date
+
+    @admin.display(description='Тип службы')
     def get_services(self, obj):
         return ', '.join([ts.name for ts in obj.type_service.all()])

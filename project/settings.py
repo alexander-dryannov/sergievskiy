@@ -41,11 +41,12 @@ INSTALLED_APPS = [
     'solo',
     'crispy_forms',
     'crispy_bootstrap5',
-    'apps.gallery',
+    # 'apps.gallery',
     # 'apps.multimedia',
     'apps.schedule',
     'apps.posts',
     'apps.about',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -54,9 +55,21 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+INTERNAL_IPS = [
+    'http://sergievskiy.backend/',
+    'http://sergievskiy.backend'
+    'http://0.0.0.0/',
+    'http://localhost/',
+    'sergievskiy.backend',
+    'localhost'
+    '127.0.0.1',
+    '0.0.0.0',
 ]
 
 ROOT_URLCONF = 'project.urls'
