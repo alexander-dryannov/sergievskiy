@@ -13,7 +13,7 @@ def week_schedule(request):
 
     if week_qs:
         for week in week_qs:
-            days = models.Day.objects.filter(is_visible=True, date__gte=date.today())
+            days = models.Day.objects.filter(is_visible=True, date__gte=date.today()).order_by('date')
 
             if days:
                 days_filter = days.filter(week=week)
@@ -24,7 +24,7 @@ def week_schedule(request):
 
                 for day in days_filter:
                     data['days_and_events'].append(
-                        {'day': day, 'events': models.Event.objects.filter(day=day, is_visible=True)}
+                        {'day': day, 'events': models.Event.objects.filter(day=day, is_visible=True).order_by('time')}
                     )
                 weeks.append(data)
         context['weeks'] = weeks

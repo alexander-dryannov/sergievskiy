@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'solo',
     'crispy_forms',
     'crispy_bootstrap5',
-    'apps.gallery',
+    # 'apps.gallery',
     # 'apps.multimedia',
     'apps.schedule',
     'apps.posts',
