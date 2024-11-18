@@ -12,8 +12,6 @@ services:
     image: redis:7.0.7
     expose:
       - "6379"
-    ports:
-      - "6379:6379"
   db:
     container_name: db
     image: postgres:16

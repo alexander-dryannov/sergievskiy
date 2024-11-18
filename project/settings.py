@@ -172,8 +172,7 @@ CACHES = {
         "BACKEND": 'django.core.cache.backends.redis.RedisCache',
         "LOCATION": f'redis://{REDIS_HOST}:{REDIS_PORT}',
         "OPTIONS": {
-            "db": REDIS_DB_CACHE,
-            "pool_class": "redis.BlockingConnectionPool",
+            "db": REDIS_DB_CACHE
         },
     }
 }
