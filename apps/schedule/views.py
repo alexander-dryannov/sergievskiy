@@ -1,31 +1,28 @@
 from datetime import date
 
+from django.conf import settings
 from django.shortcuts import render
+from django.views.decorators.cache import cache_page
 
 from . import models
 
 
+@cache_page(settings.REDIS_CACHE_TIMEOUT)
 def week_schedule(request):
-    weeks = []
-    context = {}
     week_qs = models.Week.objects.filter(is_visible=True).order_by('-pk')[:2]
     week_qs = reversed(week_qs)
+    days_qs = models.Day.objects.filter(is_visible=True, date__gte=date.today()).order_by('date')
+    events_qs = models.Event.objects.filter(is_visible=True).order_by('time')
 
-    if week_qs:
-        for week in week_qs:
-            days = models.Day.objects.filter(is_visible=True, date__gte=date.today()).order_by('date')
+    weeks_data_list = []
 
-            if days:
-                days_filter = days.filter(week=week)
-                data = {'week': week, 'days_and_events': []}
+    for week in week_qs:
+        d = {'week': week, 'days_and_events': []}
 
-                if not days_filter:
-                    continue
+        for day in days_qs.filter(is_visible=True, week=week).order_by('date'):
+            events = events_qs.filter(day=day)
+            d['days_and_events'].append({'day': day, 'events': events})
 
-                for day in days_filter:
-                    data['days_and_events'].append(
-                        {'day': day, 'events': models.Event.objects.filter(day=day, is_visible=True).order_by('time')}
-                    )
-                weeks.append(data)
-        context['weeks'] = weeks
-    return render(request, template_name='week/list.html', context=context)
+        weeks_data_list.append(d)
+
+    return render(request, template_name='week/list.html', context={'data': weeks_data_list})
