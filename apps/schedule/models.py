@@ -39,7 +39,7 @@ class Week(BasicModel):
 class Day(BasicModel):
     """День"""
 
-    week = models.ForeignKey(Week, verbose_name='Седмица', on_delete=models.PROTECT)
+    week = models.ForeignKey(Week, verbose_name='Седмица', related_name='days', on_delete=models.PROTECT)
     date = models.DateField('Дата')
     to_whom = models.TextField('Кому служба', blank=True, null=True)
     is_holiday = models.BooleanField(
@@ -59,7 +59,7 @@ class Day(BasicModel):
 class Event(BasicModel):
     """Событие"""
     
-    day = models.ForeignKey(Day, verbose_name='День', on_delete=models.PROTECT)
+    day = models.ForeignKey(Day, verbose_name='День', related_name='events', on_delete=models.PROTECT)
     type_service = models.ManyToManyField(ServiceType, verbose_name='Тип службы', blank=True)
     time = models.TimeField('Время')
     is_holiday = models.BooleanField(

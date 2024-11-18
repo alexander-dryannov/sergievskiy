@@ -38,6 +38,7 @@ class Post(BasicModel):
     type_post = models.CharField(
         'Тип поста', choices=TypePostEnum.choices, default=TypePostEnum.NEWS, max_length=100
     )
+    fixed = models.BooleanField('Закрепленная новость', default=False)
 
     def __str__(self):
         return self.title
@@ -47,9 +48,9 @@ class Post(BasicModel):
         verbose_name_plural = 'Публикации'
 
 
-class FixedPost(models.Model):
-    target = models.ForeignKey(Post, verbose_name='Новость', on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name = 'Закрепленная новость'
-        verbose_name_plural = 'Закрепленные новости'
+# class FixedPost(models.Model):
+#     target = models.ForeignKey(Post, verbose_name='Новость', on_delete=models.CASCADE)
+#
+#     class Meta:
+#         verbose_name = 'Закрепленная новость'
+#         verbose_name_plural = 'Закрепленные новости'

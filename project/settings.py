@@ -50,26 +50,20 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 INTERNAL_IPS = [
-    'http://sergievskiy.backend/',
-    'http://sergievskiy.backend'
-    'http://0.0.0.0/',
-    'http://localhost/',
-    'sergievskiy.backend',
-    'localhost'
+    'localhost',
     '127.0.0.1',
-    '0.0.0.0',
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -165,3 +159,21 @@ if MINIO:
     include(
         'minio_storage.py',
     )
+
+REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
+REDIS_PORT = int(os.getenv('REDIS_PORT', '6379'))
+REDIS_USERNAME = os.getenv('REDIS_USERNAME')
+REDIS_PASSWORD = os.getenv('REDIS_PASSWORD', None) or None
+REDIS_DB_CACHE = os.getenv('REDIS_DB_CACHE', 0)
+REDIS_CACHE_TIMEOUT = int(os.getenv('REDIS_CACHE_TIMEOUT', 10)) * 60
+
+CACHES = {
+    "default": {
+        "BACKEND": 'django.core.cache.backends.redis.RedisCache',
+        "LOCATION": f'redis://{REDIS_HOST}:{REDIS_PORT}',
+        "OPTIONS": {
+            "db": REDIS_DB_CACHE,
+            "pool_class": "redis.BlockingConnectionPool",
+        },
+    }
+}
