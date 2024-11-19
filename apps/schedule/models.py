@@ -47,9 +47,7 @@ class Day(BasicModel):
     )
 
     def __str__(self):
-        if self.week.short_name:
-            return f'{self.week.short_name} | {self.date}'
-        return f'{self.date}'
+        return f'{self.date.strftime('%d.%m.%Y')}'
 
     class Meta:
         verbose_name = 'Богослужебный день'

@@ -13,7 +13,7 @@ services:
     expose:
       - "6379"
   db:
-    container_name: db
+    container_name: pg_db
     image: postgres:16
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}

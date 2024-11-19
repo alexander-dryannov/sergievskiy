@@ -20,6 +20,7 @@ class EventInline(admin.StackedInline):
 class WeekAdmin(admin.ModelAdmin):
     list_display = ['id', 'name']
     list_display_links = ['id', 'name']
+    list_select_related = True
     inlines = [DayInline]
 
 
@@ -53,17 +54,18 @@ class ServiceTypeAdmin(admin.ModelAdmin):
 class DayAdmin(admin.ModelAdmin):
     list_display = ['id', 'date']
     list_display_links = ['id', 'date']
+    list_select_related = True
+    search_fields = ['date']
     inlines = [EventInline]
 
 
 @admin.register(models.Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ['id', 'get_day', 'time', 'get_services']
+    list_display = ['id', 'day', 'time', 'get_services']
     list_display_links = ['id', 'time']
-
-    @admin.display(description='Дата службы', ordering='day__date')
-    def get_day(self, obj):
-        return obj.day.date
+    list_select_related = True
+    autocomplete_fields = ['day']
+    raw_id_fields = ['day']
 
     @admin.display(description='Тип службы')
     def get_services(self, obj):
