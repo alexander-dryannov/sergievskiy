@@ -1,12 +1,10 @@
 from django.conf import settings
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
 from django.views.generic import ListView, DetailView
 
 from apps.posts import models
 
 
-@method_decorator(cache_page(settings.REDIS_CACHE_TIMEOUT), name='get')
+# @method_decorator(cache_page(settings.REDIS_CACHE_TIMEOUT), name='get')
 class PostListView(ListView):
     model = models.Post
     context_object_name = 'posts'

@@ -1,13 +1,11 @@
 from datetime import date
 
-from django.conf import settings
 from django.shortcuts import render
-from django.views.decorators.cache import cache_page
 
 from . import models
 
 
-@cache_page(settings.REDIS_CACHE_TIMEOUT)
+# @cache_page(settings.REDIS_CACHE_TIMEOUT)
 def week_schedule(request):
     week_qs = models.Week.objects.filter(is_visible=True).order_by('-pk')[:2]
     week_qs = reversed(week_qs)
