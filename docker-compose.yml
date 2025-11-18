@@ -14,7 +14,7 @@ services:
       - "6379"
   db:
     container_name: pg_db
-    image: postgres:16
+    image: postgres:16.11-alpine
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_USER=${DB_USER}

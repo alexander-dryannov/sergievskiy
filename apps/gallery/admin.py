@@ -1,27 +1,29 @@
+from django.conf import settings
 from django.contrib import admin, messages
 
-from snippets.minio.delete import delete_object
 from . import models
 from .handlers import create
 
+if settings.MINIO:
+    from snippets.minio.delete import delete_object
 
-@admin.action(description='Удалить окончательно')
-def delete_from_minio(modeladmin, request, queryset):
-    for obj in queryset:
-        if modeladmin.model.__name__ == models.Album.__name__:
-            contents = models.AlbumContent.objects.filter(album=obj)
-            minio_delete_objects = [content.file.name for content in contents]
+    @admin.action(description='Удалить окончательно')
+    def delete_from_minio(modeladmin, request, queryset):
+        for obj in queryset:
+            if modeladmin.model.__name__ == models.Album.__name__:
+                contents = models.AlbumContent.objects.filter(album=obj)
+                minio_delete_objects = [content.file.name for content in contents]
 
-            if contents:
-                delete_object(minio_delete_objects)
-                contents.delete()
+                if contents:
+                    delete_object(minio_delete_objects)
+                    contents.delete()
 
-            delete_object(obj=obj.cover.name)
-        else:
-            delete_object(obj=obj.file.name)
+                delete_object(obj=obj.cover.name)
+            else:
+                delete_object(obj=obj.file.name)
 
-    queryset.delete()
-    messages.success(request, 'Выбранные объекты удалены')
+        queryset.delete()
+        messages.success(request, 'Выбранные объекты удалены')
 
 
 @admin.action(description='Переместить в корзину')
@@ -34,7 +36,8 @@ def delete_to_cart(modeladmin, request, queryset):
 class AlbumContentAdmin(admin.ModelAdmin):
     list_display = ['album', 'file_type', 'is_deleted', 'is_visible']
     exclude = ['slug']
-    actions = [delete_to_cart, delete_from_minio]
+    actions = [delete_from_minio, delete_to_cart] if settings.MINIO else [delete_to_cart]
+
 
 
 @admin.register(models.Album)
