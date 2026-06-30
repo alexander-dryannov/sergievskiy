@@ -4,7 +4,6 @@ from django.views.generic import ListView, DetailView
 from apps.posts import models
 
 
-# @method_decorator(cache_page(settings.REDIS_CACHE_TIMEOUT), name='get')
 class PostListView(ListView):
     model = models.Post
     context_object_name = 'posts'

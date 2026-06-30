@@ -4,27 +4,6 @@ from django.contrib import admin, messages
 from . import models
 from .handlers import create
 
-if settings.MINIO:
-    from snippets.minio.delete import delete_object
-
-    @admin.action(description='Удалить окончательно')
-    def delete_from_minio(modeladmin, request, queryset):
-        for obj in queryset:
-            if modeladmin.model.__name__ == models.Album.__name__:
-                contents = models.AlbumContent.objects.filter(album=obj)
-                minio_delete_objects = [content.file.name for content in contents]
-
-                if contents:
-                    delete_object(minio_delete_objects)
-                    contents.delete()
-
-                delete_object(obj=obj.cover.name)
-            else:
-                delete_object(obj=obj.file.name)
-
-        queryset.delete()
-        messages.success(request, 'Выбранные объекты удалены')
-
 
 @admin.action(description='Переместить в корзину')
 def delete_to_cart(modeladmin, request, queryset):
@@ -36,7 +15,7 @@ def delete_to_cart(modeladmin, request, queryset):
 class AlbumContentAdmin(admin.ModelAdmin):
     list_display = ['album', 'file_type', 'is_deleted', 'is_visible']
     exclude = ['slug']
-    actions = [delete_from_minio, delete_to_cart] if settings.MINIO else [delete_to_cart]
+    actions = [delete_to_cart]
 
 
 
@@ -45,7 +24,7 @@ class AlbumAdmin(admin.ModelAdmin):
     list_display = ['title', 'is_deleted', 'is_visible']
     exclude = ['slug']
     change_form_template = 'admin/gallery/album/change_form.html'
-    actions = [delete_to_cart, delete_from_minio]
+    actions = [delete_to_cart]
 
     def get_actions(self, request):
         actions = super().get_actions(request)
