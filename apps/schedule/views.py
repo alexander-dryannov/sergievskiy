@@ -5,7 +5,6 @@ from django.shortcuts import render
 from . import models
 
 
-# @cache_page(settings.REDIS_CACHE_TIMEOUT)
 def week_schedule(request):
     week_qs = models.Week.objects.filter(is_visible=True).order_by('-pk')[:2]
     week_qs = reversed(week_qs)

@@ -3,9 +3,6 @@ from django.views.generic import DetailView, ListView
 from . import choices, models
 
 
-# from snippets.minio.delete import delete_object
-
-
 class AlbumListView(ListView):
     model = models.Album
     queryset = models.Album.objects.filter(is_visible=True, is_deleted=False)
