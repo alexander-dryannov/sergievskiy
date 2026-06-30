@@ -52,3 +52,4 @@ services:
       - TZ=${TZ}
     volumes:
       - ./project/deploy/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./project/deploy/nginx/sites.conf:/etc/nginx/conf.d/sites.conf
