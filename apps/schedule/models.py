@@ -6,7 +6,7 @@ from snippets.models.models import BasicModel
 class ServiceType(BasicModel):
     """Тип службы"""
 
-    name = models.CharField('Тип службы')
+    name = models.CharField('Тип службы', max_length=100)
     ordering = models.PositiveSmallIntegerField('Сортировка', default=0)
 
     def __str__(self):
@@ -27,9 +27,7 @@ class Week(BasicModel):
     )
 
     def __str__(self):
-        if self.short_name:
-            return self.short_name
-        return self.name
+        return self.short_name or self.short_name
 
     class Meta:
         verbose_name = 'Седмица'
@@ -40,14 +38,14 @@ class Day(BasicModel):
     """День"""
 
     week = models.ForeignKey(Week, verbose_name='Седмица', related_name='days', on_delete=models.PROTECT)
-    date = models.DateField('Дата')
+    date = models.DateField('Дата', unique=True)
     to_whom = models.TextField('Кому служба', blank=True, null=True)
     is_holiday = models.BooleanField(
         'Праздник', default=False, help_text='Для окраски дня службы в красный'
     )
 
     def __str__(self):
-        return f'{self.date.strftime('%d.%m.%Y')}'
+        return self.date.strftime('%d.%m.%Y')
 
     class Meta:
         verbose_name = 'Богослужебный день'
@@ -58,14 +56,14 @@ class Event(BasicModel):
     """Событие"""
     
     day = models.ForeignKey(Day, verbose_name='День', related_name='events', on_delete=models.PROTECT)
-    type_service = models.ManyToManyField(ServiceType, verbose_name='Тип службы', blank=True)
+    service_types = models.ManyToManyField(ServiceType, verbose_name='Тип службы', blank=True)
     time = models.TimeField('Время')
     is_holiday = models.BooleanField(
         'Праздник', default=False, help_text='Для окраски дня службы в красный'
     )
 
     def __str__(self):
-        return f'{self.day.date} | {self.time}'
+        return f'{self.day.date.strftime("%d.%m.%Y")} | {self.time.strftime("%H:%M")}'
 
     class Meta:
         verbose_name = 'Событие'

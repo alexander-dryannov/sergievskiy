@@ -1,25 +1,29 @@
-from datetime import date
+from django.utils import timezone
 
+from django.db.models import Prefetch
 from django.shortcuts import render
 
 from . import models
 
 
 def week_schedule(request):
-    week_qs = models.Week.objects.filter(is_visible=True).order_by('-pk')[:2]
-    week_qs = reversed(week_qs)
-    days_qs = models.Day.objects.filter(is_visible=True, date__gte=date.today()).order_by('date')
+    today = timezone.now().date()
+
     events_qs = models.Event.objects.filter(is_visible=True).order_by('time')
 
-    weeks_data_list = []
+    days_qs = models.Day.objects.filter(
+        is_visible=True,
+        date__gte=today
+    ).prefetch_related(
+        Prefetch('events', queryset=events_qs)
+    )
 
-    for week in week_qs:
-        d = {'week': week, 'days_and_events': []}
+    recent_week_ids = models.Week.objects.filter(is_visible=True).order_by('-pk')[:2].values_list('id', flat=True)
 
-        for day in days_qs.filter(is_visible=True, week=week).order_by('date'):
-            events = events_qs.filter(day=day)
-            d['days_and_events'].append({'day': day, 'events': events})
+    weeks = models.Week.objects.filter(id__in=recent_week_ids) \
+        .prefetch_related(Prefetch('days', queryset=days_qs)) \
+        .order_by('-pk')
 
-        weeks_data_list.append(d)
+    weeks_list = list(weeks)[::-1]
 
-    return render(request, template_name='week/list.html', context={'data': weeks_data_list})
+    return render(request, template_name='week/list.html', context={'data': weeks_list})

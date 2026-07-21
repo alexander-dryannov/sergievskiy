@@ -69,4 +69,4 @@ class EventAdmin(admin.ModelAdmin):
 
     @admin.display(description='Тип службы')
     def get_services(self, obj):
-        return ', '.join([ts.name for ts in obj.type_service.all()])
+        return ', '.join([ts.name for ts in obj.service_types.all()])
